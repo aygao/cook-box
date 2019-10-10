@@ -1,61 +1,71 @@
-#!/usr/bin/python
-import psycopg2
-from flask import Flask, Response
-from flask import jsonify
-#from flask_sqlalchemy import SQLAlchemy
-import pandas as pd
-import pandas.io.sql as psql
-import json
+from flask import Flask, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
+import os
+
 
 hostname = 'localhost'
 username = 'postgres'
-password = 'swinub'
 database = 'CookBox'
 schema = 'cbschema'
 
-# Simple routine to run a query on a database and print the results:
-def queryRecipes(conn, schema, table, id = 0):
 
-    query = "SELECT * FROM cbschema.recipes"
-    if id != 0:
-        query = f"SELECT * FROM cbschema.recipes WHERE recipe_id = {id}"
-    # cur.execute(query)
-    df = psql.read_sql(query, conn)
-    # df = DataFrame(curr.fetchall(), columns = ["recipe_id", "name"])
-    # data = pd.read_sql(query, cur)
-    print(df)
-    return df
+# conn = psycopg2.connect(
+#     host=hostname,
+#     user=username,
+#     password=password,
+#     dbname=database
+# )
 
-    # cur.execute( "SELECT recipe_id, name FROM cbschema.recipes" )
-
-    # for recipe_id, name in cur.fetchall() :
-    #     print(recipe_id, name)
-
-
-conn = psycopg2.connect( host=hostname, user=username, password=password, dbname=database )
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URI']
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+from models import Recipes
+
 
 @app.route('/')
-def main():
-    return 'Server Works!'
-  
+def index():
+    return 'login here!'
+
+
 @app.route('/recipes', methods=['GET'])
 def getAllRecipes():
-    res = queryRecipes(conn, schema, "recipes")
-    res_json =  json.loads(res.to_json(orient='records'))
-    return jsonify(res_json)
-    # print(res)
+    try:
+        recipes = Recipes.query.all()
+        return jsonify([e.serialize() for e in recipes])
+    except Exception as e:
+        return str(e)
+
 
 @app.route('/recipes/<id>', methods=['GET'])
 def getRecipe(id):
-    res = queryRecipes(conn, schema, "recipes", id)
-    res_json =  json.loads(res.to_json(orient='records'))
-    return jsonify(res_json)
+    try:
+        recipe = Recipes.query.filter_by(recipe_id=id).first()
+        return jsonify(recipe.serialize())
+    except Exception as e:
+        return str(e)
 
 
-# @app.after_request
-# def after_request(response):
-#     return response
+@app.route("/recipes/add", methods=['POST'])
+def addRecipe():
+    user_id = request.args.get('user_id')
+    name = request.args.get('name')
+    description = request.args.get('description')
+    create_dttm = request.args.get('create_dttm')
+    try:
+        recipe = Recipes(
+            user_id=user_id,
+            name=name,
+            description=description,
+            create_dttm=create_dttm
+        )
+        db.session.add(recipe)
+        db.session.commit()
+        return "Recipe added. Recipe id = {}".format(recipe.recipe_id)
+    except Exception as e:
+        return str(e)
+
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(debug=True)
