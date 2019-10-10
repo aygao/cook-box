@@ -14,10 +14,11 @@ class Recipes(db.Model):
     create_dttm = db.Column(db.DateTime, nullable=False)
     update_dttm = db.Column(db.DateTime)
 
-    def __init__(self, name, user_id, description, create_dttm):
+    def __init__(self, name, user_id, description, tags, create_dttm):
         self.name = name
         self.user_id = user_id
         self.description = description
+        self.tags = tags
         self.create_dttm = datetime.now()
 
     def __repr__(self):

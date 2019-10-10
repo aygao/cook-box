@@ -40,6 +40,7 @@ def getAllRecipes():
 
 @app.route('/recipes/<id>', methods=['GET'])
 def getRecipe(id):
+
     try:
         recipe = Recipes.query.filter_by(recipe_id=id).first()
         return jsonify(recipe.serialize())
@@ -47,17 +48,19 @@ def getRecipe(id):
         return str(e)
 
 
-@app.route("/recipes/add", methods=['POST'])
+@app.route("/recipes", methods=['POST'])
 def addRecipe():
     user_id = request.args.get('user_id')
     name = request.args.get('name')
     description = request.args.get('description')
+    tags = request.args.get('tags')
     create_dttm = request.args.get('create_dttm')
     try:
         recipe = Recipes(
             user_id=user_id,
             name=name,
             description=description,
+            tags=tags,
             create_dttm=create_dttm
         )
         db.session.add(recipe)
