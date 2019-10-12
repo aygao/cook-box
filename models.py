@@ -1,10 +1,12 @@
 from app import db
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
 from datetime import datetime
 
 
 class Recipes(db.Model):
     __tablename__ = 'recipes'
-    __table_args__ = ({"schema": "cbschema"})
+    __table_args__ = ({"schema": "cbschema", "useexisting": True})
 
     recipe_id = db.Column(db.BigInteger, primary_key=True)
     user_id = db.Column(db.BigInteger, nullable=False)
@@ -13,6 +15,7 @@ class Recipes(db.Model):
     tags = db.Column(db.ARRAY(db.String(255)))
     create_dttm = db.Column(db.DateTime, nullable=False)
     update_dttm = db.Column(db.DateTime)
+    steps = relationship("Steps", backref="recipes", passive_deletes=True)
 
     def __init__(self, name, user_id, description, tags, create_dttm):
         self.name = name
@@ -36,12 +39,33 @@ class Recipes(db.Model):
         }
 
 
-# class RecipeSteps(db.Model):
+class Steps(db.Model):
+    __tablename__ = 'steps'
+    __table_args__ = ({"schema": "cbschema"})
 
-#     step_id = db.Column(db.Integer, primary_key=True)
-#     recipe_id = db.Column(db.Integer)
-#     name = db.Column(db.String(80), nullable=False)
-#     step_number = db.Column(db.Integer)
+    recipe_id = db.Column(
+        db.BigInteger,
+        ForeignKey('cbschema.recipes.recipe_id', ondelete='CASCADE'),
+        primary_key=True)
+    step_num = db.Column(db.BigInteger, primary_key=True)
+    info = db.Column(db.String(5000))
+    create_dttm = db.Column(db.DateTime, nullable=False)
+    update_dttm = db.Column(db.DateTime)
 
-#     def __repr__(self):
-#         return '<recipeSteps %r>' % self.name
+    def __init__(self, recipe_id, step_num, info, create_dttm):
+        self.recipe_id = recipe_id
+        self.step_num = step_num
+        self.info = info
+        self.create_dttm = datetime.now()
+
+    def __repr__(self):
+        return '<id {}>'.format(self.id)
+
+    def serialize(self):
+        return {
+            'recipe_id': self.recipe_id,
+            'step_num': self.step_num,
+            'info': self.info,
+            'create_dttm': self.create_dttm,
+            'update_dttm': self.update_dttm
+        }

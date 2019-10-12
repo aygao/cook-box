@@ -1,20 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import os
+from datetime import datetime
 
-
-hostname = 'localhost'
-username = 'postgres'
-database = 'CookBox'
-schema = 'cbschema'
-
-
-# conn = psycopg2.connect(
-#     host=hostname,
-#     user=username,
-#     password=password,
-#     dbname=database
-# )
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URI']
@@ -53,7 +41,7 @@ def addRecipe():
     user_id = request.args.get('user_id')
     name = request.args.get('name')
     description = request.args.get('description')
-    tags = request.args.get('tags')
+    tags = request.args.getlist('tags')
     create_dttm = request.args.get('create_dttm')
     try:
         recipe = Recipes(
@@ -66,6 +54,31 @@ def addRecipe():
         db.session.add(recipe)
         db.session.commit()
         return "Recipe added. Recipe id = {}".format(recipe.recipe_id)
+    except Exception as e:
+        return str(e)
+
+
+@app.route("/recipes/<id>", methods=['PUT'])
+def updateRecipe(id):
+    try:
+        recipe = Recipes.query.filter_by(recipe_id=id).first()
+        recipe.user_id = request.args.get('user_id')
+        recipe.name = request.args.get('name')
+        recipe.description = request.args.get('description')
+        recipe.tags = request.args.getlist('tags')
+        recipe.update_dttm = datetime.now()
+        db.session.commit()
+        return "Recipe" + recipe.name + " was updated"
+    except Exception as e:
+        return str(e)
+
+
+@app.route("/recipes/<id>", methods=['DELETE'])
+def deleteRecipe(id):
+    try:
+        Recipes.query.filter_by(recipe_id=id).delete()
+        db.session.commit()
+        return f"Recipe {id} was deleted"
     except Exception as e:
         return str(e)
 
