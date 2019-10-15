@@ -9,7 +9,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URI']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-from models import Recipes
+from models import Recipes, Steps, Ingredients
 
 
 @app.route('/')
@@ -66,7 +66,7 @@ def updateRecipe(id):
         recipe.tags = request.form.getlist('tags')
         recipe.update_dttm = datetime.now()
         db.session.commit()
-        return "Recipe" + recipe.name + " was updated"
+        return "Recipe " + recipe.name + " was updated"
     except Exception as e:
         return str(e)
 
@@ -81,11 +81,31 @@ def deleteRecipe(id):
         return str(e)
 
 
-# @app.route("/recipes/steps/<id>", methods=['GET'])
-# def getSteps(id):
-#     try:
-#         steps = Steps.query.filter_by(recipe_id=id).first()
-#         return jsonify(recipe.serialize())
+@app.route("/recipes/steps/<recipe_id><step_num>", methods=['GET'])
+def getSteps(recipe_id, step_num):
+    try:
+        step = Steps.query.filter_by(
+            recipe_id=recipe_id,
+            step_num=step_num).first()
+        return jsonify(step.serialize())
+    except Exception as e:
+        return str(e)
+
+
+@app.route("/recipes/steps/<recipe_id>", methods=['POST'])
+def addStep(recipe_id):
+    recipe_id = request.form.get('recipe_id')
+    info = request.form.get('info')
+    try:
+        step = Steps(
+            recipe_id=recipe_id,
+            info=info
+        )
+        db.session.add(step)
+        db.session.commit()
+        return "Step added. Step num = {}".format(step.step_num)
+    except Exception as e:
+        return str(e)
 
 
 if __name__ == '__main__':

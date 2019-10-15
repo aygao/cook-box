@@ -17,7 +17,10 @@ class Recipes(db.Model):
     create_dttm = db.Column(db.DateTime, nullable=False)
     update_dttm = db.Column(db.DateTime)
     steps = relationship("Steps", backref="recipes", passive_deletes=True)
-    ingredients = relationship("Ingredients", backref="recipes", passive_deletes=True)
+    ingredients = relationship(
+        "Ingredients",
+        backref="recipes",
+        passive_deletes=True)
 
     def __init__(self, name, user_id, description, tags):
         self.name = name
