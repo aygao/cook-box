@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_api import status
 from flask_sqlalchemy import SQLAlchemy
 import os
 from datetime import datetime
@@ -33,7 +34,7 @@ def getRecipe(id):
         recipe = Recipes.query.filter_by(recipe_id=id).first()
         return jsonify(recipe.serialize())
     except Exception as e:
-        return str(e)
+        return str(e), status.HTTP_404_NOT_FOUND
 
 
 @app.route("/recipes", methods=['POST'])
@@ -81,31 +82,31 @@ def deleteRecipe(id):
         return str(e)
 
 
-@app.route("/recipes/steps/<recipe_id><step_num>", methods=['GET'])
-def getSteps(recipe_id, step_num):
-    try:
-        step = Steps.query.filter_by(
-            recipe_id=recipe_id,
-            step_num=step_num).first()
-        return jsonify(step.serialize())
-    except Exception as e:
-        return str(e)
+# @app.route("/recipes/steps/<recipe_id><step_num>", methods=['GET'])
+# def getSteps(recipe_id, step_num):
+#     try:
+#         step = Steps.query.filter_by(
+#             recipe_id=recipe_id,
+#             step_num=step_num).first()
+#         return jsonify(step.serialize())
+#     except Exception as e:
+#         return str(e)
 
 
-@app.route("/recipes/steps/<recipe_id>", methods=['POST'])
-def addStep(recipe_id):
-    recipe_id = request.form.get('recipe_id')
-    info = request.form.get('info')
-    try:
-        step = Steps(
-            recipe_id=recipe_id,
-            info=info
-        )
-        db.session.add(step)
-        db.session.commit()
-        return "Step added. Step num = {}".format(step.step_num)
-    except Exception as e:
-        return str(e)
+# @app.route("/recipes/steps/<recipe_id>", methods=['POST'])
+# def addStep(recipe_id):
+#     recipe_id = request.form.get('recipe_id')
+#     info = request.form.get('info')
+#     try:
+#         step = Steps(
+#             recipe_id=recipe_id,
+#             info=info
+#         )
+#         db.session.add(step)
+#         db.session.commit()
+#         return "Step added. Step num = {}".format(step.step_num)
+#     except Exception as e:
+#         return str(e)
 
 
 if __name__ == '__main__':
