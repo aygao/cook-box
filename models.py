@@ -19,7 +19,7 @@ class Recipes(db.Model):
     steps = relationship("Steps", backref="recipes", passive_deletes=True)
     ingredients = relationship("Ingredients", backref="recipes", passive_deletes=True)
 
-    def __init__(self, name, user_id, description, tags, create_dttm):
+    def __init__(self, name, user_id, description, tags):
         self.name = name
         self.user_id = user_id
         self.description = description
@@ -54,7 +54,7 @@ class Steps(db.Model):
     create_dttm = db.Column(db.DateTime, nullable=False)
     update_dttm = db.Column(db.DateTime)
 
-    def __init__(self, recipe_id, step_num, info, create_dttm):
+    def __init__(self, recipe_id, step_num, info):
         self.recipe_id = recipe_id
         self.step_num = step_num
         self.info = info
@@ -88,7 +88,7 @@ class Ingredients(db.Model):
     create_dttm = db.Column(db.DateTime, nullable=False)
     update_dttm = db.Column(db.DateTime)
 
-    def __init__(self, recipe_id, ingredient_id, name, quantity, notes, create_dttm):
+    def __init__(self, recipe_id, ingredient_id, name, quantity, notes):
         self.recipe_id = recipe_id
         self.ingredient_id = ingredient_id
         self.name = name

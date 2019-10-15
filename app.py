@@ -38,18 +38,16 @@ def getRecipe(id):
 
 @app.route("/recipes", methods=['POST'])
 def addRecipe():
-    user_id = request.args.get('user_id')
-    name = request.args.get('name')
-    description = request.args.get('description')
-    tags = request.args.getlist('tags')
-    create_dttm = request.args.get('create_dttm')
+    user_id = request.form.get('user_id')
+    name = request.form.get('name')
+    description = request.form.get('description')
+    tags = request.form.getlist('tags')
     try:
         recipe = Recipes(
             user_id=user_id,
             name=name,
             description=description,
-            tags=tags,
-            create_dttm=create_dttm
+            tags=tags
         )
         db.session.add(recipe)
         db.session.commit()
@@ -62,10 +60,10 @@ def addRecipe():
 def updateRecipe(id):
     try:
         recipe = Recipes.query.filter_by(recipe_id=id).first()
-        recipe.user_id = request.args.get('user_id')
-        recipe.name = request.args.get('name')
-        recipe.description = request.args.get('description')
-        recipe.tags = request.args.getlist('tags')
+        recipe.user_id = request.form.get('user_id')
+        recipe.name = request.form.get('name')
+        recipe.description = request.form.get('description')
+        recipe.tags = request.form.getlist('tags')
         recipe.update_dttm = datetime.now()
         db.session.commit()
         return "Recipe" + recipe.name + " was updated"
@@ -81,6 +79,13 @@ def deleteRecipe(id):
         return f"Recipe {id} was deleted"
     except Exception as e:
         return str(e)
+
+
+# @app.route("/recipes/steps/<id>", methods=['GET'])
+# def getSteps(id):
+#     try:
+#         steps = Steps.query.filter_by(recipe_id=id).first()
+#         return jsonify(recipe.serialize())
 
 
 if __name__ == '__main__':
