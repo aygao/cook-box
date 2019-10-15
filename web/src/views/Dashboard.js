@@ -1,9 +1,9 @@
 import React from 'react'
-import {settings} from '../settings/config'
+import {getAllRecipes} from '../utils/api'
 
 class Dashboard extends React.Component {
     componentDidMount() {
-        console.log(settings)
+        getAllRecipes()
     }
     render() {
         return (
