@@ -1,7 +1,10 @@
 import {settings} from '../settings/config'
 
-export const getAllRecipes = () => {
-    fetch(settings.api_uri)
-        .then(res => res.json())
-        .then(res => console.log(res))
+export const getAllRecipes = async () => {
+    try {
+        const response = await fetch(settings.api_uri)
+        return await response.json()
+    } catch (e) {
+        return e.message;
+    }
 }
