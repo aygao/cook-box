@@ -9,6 +9,7 @@ import {
     Link
 } from "react-router-dom"
 import RenderRecipePage from './views/RenderRecipePage'
+import NewRecipe from './views/NewRecipe'
 //import 'typeface-roboto';
 
 
@@ -17,12 +18,15 @@ const App = () => {
     <Router>
         <div className="App">
             <Link to="/dashboard">Dashboard</Link>
-            <Link to="/recipe">Recipe</Link>
+            <Link to="/newrecipe">New Recipe</Link>
             <Switch>
                 <Route path="/dashboard" exact>
                     <Dashboard />
                 </Route>
                 <Route path="/recipe/:id" component={RenderRecipePage} exact/>
+                <Route path="/newrecipe" exact>
+                    <NewRecipe />
+                </Route>
             </Switch>
         </div>
     </Router>

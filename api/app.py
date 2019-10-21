@@ -39,12 +39,14 @@ def getRecipe(id):
         return str(e), status.HTTP_404_NOT_FOUND
 
 
-@app.route("/recipes", methods=['POST'])
+@app.route("/recipes/", methods=['POST'])
 def addRecipe():
     user_id = request.form.get('user_id')
     name = request.form.get('name')
     description = request.form.get('description')
     tags = request.form.getlist('tags')
+    print(description)
+    print(name)
     try:
         recipe = Recipes(
             user_id=user_id,
