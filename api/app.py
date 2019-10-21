@@ -84,15 +84,22 @@ def deleteRecipe(id):
         return str(e)
 
 
-# @app.route("/recipes/steps/<recipe_id><step_num>", methods=['GET'])
-# def getSteps(recipe_id, step_num):
-#     try:
-#         step = Steps.query.filter_by(
-#             recipe_id=recipe_id,
-#             step_num=step_num).first()
-#         return jsonify(step.serialize())
-#     except Exception as e:
-#         return str(e)
+@app.route("/recipes/<recipe_id>/ingredients", methods=['GET'])
+def getIngredients(recipe_id):
+    try:
+        ingredients = Ingredients.query.filter_by(recipe_id=recipe_id).all()
+        return jsonify([e.serialize() for e in ingredients])
+    except Exception as e:
+        return str(e)
+
+
+@app.route("/recipes/<recipe_id>/steps", methods=['GET'])
+def getSteps(recipe_id):
+    try:
+        steps = Steps.query.filter_by(recipe_id=recipe_id).all()
+        return jsonify([e.serialize() for e in steps])
+    except Exception as e:
+        return str(e)
 
 
 # @app.route("/recipes/steps/<recipe_id>", methods=['POST'])
