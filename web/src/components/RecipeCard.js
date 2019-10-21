@@ -7,58 +7,79 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import { Redirect } from 'react-router'
 
 
-const useStyles = makeStyles({
-    card: {
-        minWidth: 275,
-        height: 375
-    },
-    bullet: {
-        display: 'inline-block',
-        margin: '0 2px',
-        transform: 'scale(0.8)',
-    },
-    title: {
-        fontSize: 14,
-    },
-    pos: {
-        marginBottom: 12,
-    },
-});
+// const useStyles = makeStyles({
+//     card: {
+//         minWidth: 275,
+//         height: 375
+//     },
+//     bullet: {
+//         display: 'inline-block',
+//         margin: '0 2px',
+//         transform: 'scale(0.8)',
+//     },
+//     title: {
+//         fontSize: 14,
+//     },
+//     pos: {
+//         marginBottom: 12,
+//     },
+// });
 
-export default function SimpleCard(props) {
-    const classes = useStyles();
+class SimpleCard extends React.Component {
+    // classes = useStyles();
     //const bull = <span className={classes.bullet}>•</span>;
+    state={cardClick: false}
 
-    return (
-    <Card className={classes.card}>
-        <CardContent>
-            <Typography className={classes.title} color="textSecondary" gutterBottom>
-            Recipe
-            </Typography>
-            <Typography variant="h5" component="h2">
-            {props.recipeData.name}
-            </Typography>
-            <Typography className={classes.pos} color="textSecondary">
-            adjective
-            </Typography>
-            <Typography variant="body2" component="p">
-            {props.recipeData.description}
-            <br />
-            {props.recipeData.tags}
-            </Typography>
-        </CardContent>
-        <CardActions>
+
+    
+    render() {
+        const handleOnClick = () => {
+            this.setState({cardClick: true})    
+        }
+        return (
             <div>
-                <IconButton>
-                    <EditOutlinedIcon/>
-                </IconButton>
-                <IconButton>
-                    <DeleteForeverOutlinedIcon/>
-                </IconButton>
+                {this.state.cardClick ? <Redirect to={`/recipe/${this.props.recipeData.recipe_id}`} /> :
+                    <div onClick={handleOnClick}>
+                    <Card>
+                        <CardContent>
+                            <Typography color="textSecondary" gutterBottom>
+                            Recipe
+                            </Typography>
+                            <Typography variant="h5" component="h2">
+                            {this.props.recipeData.name}
+                            </Typography>
+                            <Typography color="textSecondary">
+                            adjective
+                            </Typography>
+                            <Typography variant="body2" component="p">
+                            {this.props.recipeData.description}
+                            <br />
+                            {this.props.recipeData.tags}
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <div>
+                                <IconButton>
+                                    <EditOutlinedIcon/>
+                                </IconButton>
+                                <IconButton>
+                                    <DeleteForeverOutlinedIcon/>
+                                </IconButton>
+                            </div>
+                        </CardActions>
+                    </Card>
+                </div>
+                
+                }
+                
             </div>
-        </CardActions>
-    </Card>
-    );
+            
+            );
+    }
+    
 }
+
+export default SimpleCard

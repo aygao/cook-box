@@ -1,5 +1,6 @@
 import React from 'react'
 import NavBar from '../components/NavBar'
+import Sidebar from '../components/Sidebar'
 import RecipeCard from '../components/RecipeCard'
 import {settings} from '../settings/config'
 import Grid from '@material-ui/core/Grid';
@@ -20,7 +21,7 @@ class Dashboard extends React.Component {
                 <Grid container spacing={3}>
                     {this.state.recipeData.map(
                         (row) => 
-                            <Grid item xs={3}>
+                            <Grid key={row.recipe_id} item xs={3}>
                                 <RecipeCard key={row.recipe_id} recipeData={row}>xs=3</RecipeCard>
                             </Grid>
                     )} 
