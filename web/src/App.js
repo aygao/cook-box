@@ -8,7 +8,7 @@ import {
     Route,
     Link
 } from "react-router-dom"
-import Recipe from './views/Recipe'
+import RenderRecipePage from './views/RenderRecipePage'
 //import 'typeface-roboto';
 
 
@@ -22,7 +22,7 @@ const App = () => {
                 <Route path="/dashboard" exact>
                     <Dashboard />
                 </Route>
-                <Route path="/recipe/:id" component={Recipe} exact/>
+                <Route path="/recipe/:id" component={RenderRecipePage} exact/>
             </Switch>
         </div>
     </Router>

@@ -1,19 +1,42 @@
 import React from 'react'
-import NavBar from '../components/NavBar'
-import Sidebar from '../components/Sidebar'
-import RecipeCard from '../components/RecipeCard'
 import {settings} from '../settings/config'
-import Grid from '@material-ui/core/Grid';
-import { withRouter } from 'react-router'
+ 
 
+class Recipe extends React.Component {
+    state = {recipeData: [], ingredientData: [], stepData: []}
 
-const Recipe = (props) => {
-    console.log(props)
-    return(
-        <div>Recipe Page for {props.match.params.id}</div>
-    )    
+    componentDidMount() {
+        fetch(settings.api_uri + this.props.id)
+            .then(res => res.json())
+            .then(res => this.setState({ recipeData: res }));
+
+        fetch(settings.api_ingr_uri + this.props.id)
+            .then(res => res.json())
+            .then(res => this.setState({ ingredientData: res }));
+        
+        fetch(settings.api_steps_uri + this.props.id)
+            .then(res => res.json())
+            .then(res => this.setState({ stepData: res }));
+    }
+
+    render() {
+        console.log(this.state)
+        return (
+            <div>
+                    <h1>{this.state.recipeData.name}</h1>
+                    <h2>Ingredients:</h2>
+                    {this.state.ingredientData.map(
+                        (row) => 
+                            <p key={row.ingredient_id}>{row.quantity} {row.name} {row.info}</p>
+                    )} 
+                    <h2>Instructions:</h2>
+                    {this.state.stepData.map(
+                        (row) =>
+                            <p key={row.step_num}>{row.step_num} {row.info}</p>
+                    )}
+            </div>
+        )
+    }
 }
-export default Recipe
 
-// const RecipeWithRouter = withRouter(Recipe)
-// export default RecipeWithRouter
+export default Recipe

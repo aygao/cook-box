@@ -52,7 +52,7 @@ class SimpleCard extends React.Component {
                             {this.props.recipeData.name}
                             </Typography>
                             <Typography color="textSecondary">
-                            adjective
+                            {this.props.recipeData.servings}
                             </Typography>
                             <Typography variant="body2" component="p">
                             {this.props.recipeData.description}

@@ -20,7 +20,7 @@ def index():
     return 'login here!'
 
 
-@app.route('/recipes', methods=['GET'])
+@app.route('/recipes/', methods=['GET'])
 def getAllRecipes():
     try:
         recipes = Recipes.query.all()
@@ -84,7 +84,7 @@ def deleteRecipe(id):
         return str(e)
 
 
-@app.route("/recipes/<recipe_id>/ingredients", methods=['GET'])
+@app.route("/recipes/ingredients/<recipe_id>", methods=['GET'])
 def getIngredients(recipe_id):
     try:
         ingredients = Ingredients.query.filter_by(recipe_id=recipe_id).all()
@@ -93,7 +93,7 @@ def getIngredients(recipe_id):
         return str(e)
 
 
-@app.route("/recipes/<recipe_id>/steps", methods=['GET'])
+@app.route("/recipes/steps/<recipe_id>", methods=['GET'])
 def getSteps(recipe_id):
     try:
         steps = Steps.query.filter_by(recipe_id=recipe_id).all()
