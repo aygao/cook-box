@@ -39,14 +39,35 @@ def getRecipe(id):
         return str(e), status.HTTP_404_NOT_FOUND
 
 
+# @app.route("/recipes/", methods=['POST'])
+# def addRecipe():
+#     user_id = request.form.get('user_id')
+#     name = request.form.get('name')
+#     description = request.form.get('description')
+#     tags = request.form.getlist('tags')
+#     print(description)
+#     print(name)
+#     try:
+#         recipe = Recipes(
+#             user_id=user_id,
+#             name=name,
+#             description=description,
+#             tags=tags
+#         )
+#         db.session.add(recipe)
+#         db.session.commit()
+#         return str(recipe.recipe_id)
+#     except Exception as e:
+#         return str(e)
+
 @app.route("/recipes/", methods=['POST'])
 def addRecipe():
-    user_id = request.form.get('user_id')
-    name = request.form.get('name')
-    description = request.form.get('description')
-    tags = request.form.getlist('tags')
-    print(description)
-    print(name)
+    content = request.get_json()
+    print(content)
+    user_id = content.get('user_id')
+    name = content.get('name')
+    description = content.get('description')
+    tags = content.get('tags')
     try:
         recipe = Recipes(
             user_id=user_id,
@@ -56,7 +77,7 @@ def addRecipe():
         )
         db.session.add(recipe)
         db.session.commit()
-        return "Recipe added. Recipe id = {}".format(recipe.recipe_id)
+        return str(recipe.recipe_id)
     except Exception as e:
         return str(e)
 
@@ -104,20 +125,63 @@ def getSteps(recipe_id):
         return str(e)
 
 
-# @app.route("/recipes/steps/<recipe_id>", methods=['POST'])
-# def addStep(recipe_id):
-#     recipe_id = request.form.get('recipe_id')
-#     info = request.form.get('info')
-#     try:
-#         step = Steps(
-#             recipe_id=recipe_id,
-#             info=info
-#         )
-#         db.session.add(step)
-#         db.session.commit()
-#         return "Step added. Step num = {}".format(step.step_num)
-#     except Exception as e:
-#         return str(e)
+@app.route("/recipes/ingredients/", methods=['POST'])
+def addIngredients():
+
+    content = request.get_json()
+    recipe_id = content.pop(len(content) - 1)
+
+    # try:
+    #     Recipes.query.filter_by(recipe_id=recipe_id).delete()
+    #     db.session.commit()
+    #     return f"Recipe {id} steps were deleted"
+    # except Exception as e:
+    #     return str(e)
+
+    for i in range(0, len(content) - 1, 1):
+        quantity = content[i].get('quantity')
+        name = content[i].get('name')
+        notes = content[i].get('info')
+        try:
+            ingredients = Ingredients(
+                recipe_id=recipe_id,
+                ingredient_id=i+1,
+                name=name,
+                quantity=quantity,
+                notes=notes
+            )
+            db.session.add(ingredients)
+            db.session.commit()
+        except Exception as e:
+            return str(e)
+    return "ingredients added"
+
+
+@app.route("/recipes/steps/", methods=['POST'])
+def addSteps():
+    content = request.get_json()
+    recipe_id = content.pop(len(content) - 1)
+
+    # try:
+    #     Recipes.query.filter_by(recipe_id=recipe_id).delete()
+    #     db.session.commit()
+    #     return f"Recipe {id} steps were deleted"
+    # except Exception as e:
+    #     return str(e)
+
+    for i in range(0, len(content) - 1, 1):
+        info = content[i]
+        try:
+            steps = Steps(
+                recipe_id=recipe_id,
+                step_num=i+1,
+                info=info
+            )
+            db.session.add(steps)
+            db.session.commit()
+        except Exception as e:
+            return str(e)
+    return "steps added"
 
 
 if __name__ == '__main__':

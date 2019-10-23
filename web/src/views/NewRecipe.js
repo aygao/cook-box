@@ -74,26 +74,68 @@ class NewRecipe extends React.Component {
         const handleSubmit = (event) => {
             event.preventDefault();
             alert('Event: Form Submit');
-            const text = {
+            const recipeData = {
                 user_id: this.state.user_id,
                 name: this.state.name,
-                description: this.state.description,
-                operation:"insert"
+                description: this.state.description
             }
-            const formData = new FormData();
-            formData.append("name", this.state.name)
-            formData.append("description", this.state.description)
-            formData.append("user_id", this.state.user_id)
-            const request = new XMLHttpRequest();
-            request.open("POST", settings.api_uri);
-            request.send(formData);
+
+            fetch(settings.api_uri, {
+                method: 'POST',
+                body: JSON.stringify(recipeData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => response.json()
+            ).then(response => {
+                let stepsData = this.state.steps
+                stepsData.push(response)
+
+                let ingredientData = this.state.ingredients
+                ingredientData.push(response)
+
+                fetch(settings.api_ingr_uri, {
+                    method: 'POST',
+                    body: JSON.stringify(ingredientData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+
+                fetch(settings.api_steps_uri, {
+                    method: 'POST',
+                    body: JSON.stringify(stepsData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+    
+               // window.location.reload();
+            }).catch(err => err);
+
+            // const recipeData = new FormData();
+            // recipeData.append("name", this.state.name)
+            // recipeData.append("description", this.state.description)
+            // recipeData.append("user_id", this.state.user_id)
+            // const recipeRequest = new XMLHttpRequest();
+            // recipeRequest.onreadystatechange = () => {
+            //     if (recipeRequest.readyState === XMLHttpRequest.DONE) {
+            //         let recipeId = recipeRequest.responseText
+            //         console.log(recipeId)
+                    
+            //     }
+            // }
+
+            // recipeRequest.open("POST", settings.api_uri, true);
+            //         recipeRequest.send(recipeData);
+
 
         
         }
         
         return (
             <div>
-                <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+                {/* <form noValidate autoComplete="off" onSubmit={handleSubmit}> */}
                     <TextField
                         required
                         id="outlined-required"
@@ -130,21 +172,21 @@ class NewRecipe extends React.Component {
                         return (
                             <div>
                                 <TextField
-                                    id={index}
+                                    // id={index}
                                     value = {this.state.ingredients[index].quantity}
                                     onChange={handleIngredientChange(index, 'quantity')}
                                     placeholder='Enter Quantity'
                                     label={"Quantity ".concat(index+1)}
                                 />
                                 <TextField
-                                    id={index}
+                                    // id={index}
                                     value = {this.state.ingredients[index].name}
                                     onChange={handleIngredientChange(index, 'name')}
                                     placeholder='Enter Ingredient'
                                     label={"Ingredient ".concat(index+1)}
                                 />
                                 <TextField
-                                    id={index}
+                                    // id={index}
                                     value = {this.state.ingredients[index].info}
                                     onChange={handleIngredientChange(index, 'info')}
                                     placeholder='Enter additional info'
@@ -165,7 +207,7 @@ class NewRecipe extends React.Component {
                         return (
                             <div>
                                 <TextField
-                                    id={index}
+                                    // id={index}
                                     value = {this.state.steps[index]}
                                     onChange={handleStepChange(index)}
                                     placeholder='Enter instructions'
@@ -183,13 +225,13 @@ class NewRecipe extends React.Component {
                     </Button>
 
 
-                    <Button type="submit" variant="contained" color="primary">
+                    <Button variant="contained" color="primary" onClick={handleSubmit}>
                         Create Recipe
                     </Button>
                     <Button variant="outlined" color="primary">
                         Cancel
                     </Button>
-                </form>
+                {/* </form> */}
             </div>
         )
     }
