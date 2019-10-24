@@ -34,6 +34,8 @@ class Recipe extends React.Component {
                         (row) =>
                             <p key={row.step_num}>{row.step_num} {row.info}</p>
                     )}
+                    <h2>Tags:</h2>
+                    {this.state.recipeData.tags}
             </div>
         )
     }

@@ -137,8 +137,8 @@ def addIngredients():
     #     return f"Recipe {id} steps were deleted"
     # except Exception as e:
     #     return str(e)
-
-    for i in range(0, len(content) - 1, 1):
+    print(content)
+    for i in range(0, len(content), 1):
         quantity = content[i].get('quantity')
         name = content[i].get('name')
         notes = content[i].get('info')
@@ -169,7 +169,7 @@ def addSteps():
     # except Exception as e:
     #     return str(e)
 
-    for i in range(0, len(content) - 1, 1):
+    for i in range(0, len(content), 1):
         info = content[i]
         try:
             steps = Steps(
