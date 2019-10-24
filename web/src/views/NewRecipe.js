@@ -4,8 +4,6 @@ import Button from '@material-ui/core/Button';
 import {settings} from '../settings/config'
 import update from 'react-addons-update'
 import Chip from '@material-ui/core/Chip';
-import Paper from '@material-ui/core/Paper';
-import TagFacesIcon from '@material-ui/icons/TagFaces';
 
 class NewRecipe extends React.Component {
 
