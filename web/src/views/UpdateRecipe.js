@@ -4,7 +4,9 @@ import Button from '@material-ui/core/Button';
 import {settings} from '../settings/config'
 import update from 'react-addons-update'
 import Chip from '@material-ui/core/Chip';
-import Paper from '@material-ui/core/Paper';
+import Paper from '@material-ui/core/Paper'
+import history from '../utils/History'
+import { withRouter } from "react-router-dom"
 
 
 class UpdateRecipe extends React.Component {
@@ -111,13 +113,12 @@ class UpdateRecipe extends React.Component {
             console.log(field)
         };
 
-        const handleSubmit = (event) => {
+        const handleSubmit = async (event) => {
             event.preventDefault();
             if (this.state.name === '') {
                 this.setState({isNameError: true})
                 return
             }
-            console.log('Event: Form Submit');
 
             const recipeData = {
                 user_id: this.state.user_id,
@@ -129,7 +130,7 @@ class UpdateRecipe extends React.Component {
             let stepsData = this.state.steps.filter((row) => row !== '')
             let ingredientData = this.state.ingredients.filter((row) => row.name !== '')
 
-            fetch(settings.api_uri + this.props.id, {
+            await fetch(settings.api_uri + this.props.id, {
                 method: 'PUT',
                 body: JSON.stringify(recipeData),
                 headers: {
@@ -137,7 +138,7 @@ class UpdateRecipe extends React.Component {
                 }
             }).catch(err => err);
 
-            fetch(settings.api_ingr_uri + this.props.id, {
+            await fetch(settings.api_ingr_uri + this.props.id, {
                 method: 'PUT',
                 body: JSON.stringify(ingredientData),
                 headers: {
@@ -145,15 +146,20 @@ class UpdateRecipe extends React.Component {
                 }
             }).catch(err => err);
 
-            fetch(settings.api_steps_uri + this.props.id, {
+            await fetch(settings.api_steps_uri + this.props.id, {
                 method: 'PUT',
                 body: JSON.stringify(stepsData),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }).catch(err => err);
-    
-               // window.location.reload();
+
+            console.log('Event: Form Submit');
+            await this.props.history.push("/recipe/" + this.props.id);
+        }
+
+        const handleCancel = () => {
+            this.props.history.push("/recipe/" + this.props.id);
         }
         
         return (
@@ -286,7 +292,7 @@ class UpdateRecipe extends React.Component {
                 <Button variant="contained" color="primary" onClick={handleSubmit}>
                     Update Recipe
                 </Button>
-                <Button variant="outlined" color="primary">
+                <Button variant="outlined" color="primary" onClick={handleCancel}>
                     Cancel
                 </Button>
             </div>
@@ -294,4 +300,4 @@ class UpdateRecipe extends React.Component {
     }
 }
 
-export default UpdateRecipe
+export default withRouter(UpdateRecipe);

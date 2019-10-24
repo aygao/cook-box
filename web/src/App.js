@@ -10,13 +10,14 @@ import {
 } from "react-router-dom"
 import RenderRecipePage from './views/RenderRecipePage'
 import NewRecipe from './views/NewRecipe'
-import RenderUpdatePage from './views/RenderUpdatePage';
+import RenderUpdatePage from './views/RenderUpdatePage'
+import history from './utils/History'
 //import 'typeface-roboto';
 
 
 const App = () => {
     return (
-    <Router>
+    <Router history={history}>
         <div className="App">
             <Link to="/dashboard">Dashboard</Link>
             <Link to="/newrecipe">New Recipe</Link>

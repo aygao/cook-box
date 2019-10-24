@@ -77,11 +77,18 @@ class SimpleCard extends React.Component {
             e.stopPropagation()
 
             fetch(settings.api_uri + this.props.recipeData.recipe_id, {
-                method: 'DELETE',
-            }).catch(err => err);
+                method: 'DELETE'
+            }).then(response => {
+                    if (response.status >= 200 && response.status < 300) {
+                        this.props.handleRefresh()
+
+                    } else {
+                        console.log('Somthing happened wrong');
+                    }
+                }).catch(err => err);
 
             this.setState({deleteOpen: false})
-           // this.props.handleDelete()
+            //this.props.handleRefresh()
         }
 
         return (

@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import {settings} from '../settings/config'
 import update from 'react-addons-update'
 import Chip from '@material-ui/core/Chip';
+import { withRouter } from "react-router-dom"
 
 class NewRecipe extends React.Component {
 
@@ -86,7 +87,7 @@ class NewRecipe extends React.Component {
             console.log(field)
         };
 
-        const handleSubmit = (event) => {
+        const handleSubmit = async (event) => {
             event.preventDefault();
             if (this.state.name === '') {
                 this.setState({isNameError: true})
@@ -100,7 +101,7 @@ class NewRecipe extends React.Component {
                 tags: this.state.tags
             }
 
-            fetch(settings.api_uri, {
+            await fetch(settings.api_uri, {
                 method: 'POST',
                 body: JSON.stringify(recipeData),
                 headers: {
@@ -132,8 +133,14 @@ class NewRecipe extends React.Component {
     
                // window.location.reload();
             }).catch(err => err);
+
+            await this.props.history.push("/dashboard");
         }
         
+        const handleCancel = () => {
+            this.props.history.push("/dashboard");
+        }
+
         return (
             <div>
 
@@ -260,7 +267,7 @@ class NewRecipe extends React.Component {
                 <Button variant="contained" color="primary" onClick={handleSubmit}>
                     Create Recipe
                 </Button>
-                <Button variant="outlined" color="primary">
+                <Button variant="outlined" color="primary" onClick={handleCancel}>
                     Cancel
                 </Button>
             </div>
@@ -268,4 +275,4 @@ class NewRecipe extends React.Component {
     }
 }
 
-export default NewRecipe
+export default withRouter(NewRecipe);
