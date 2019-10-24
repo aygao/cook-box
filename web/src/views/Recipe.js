@@ -1,9 +1,11 @@
 import React from 'react'
 import {settings} from '../settings/config'
+import { Redirect } from 'react-router'
+import Button from '@material-ui/core/Button';
  
 
 class Recipe extends React.Component {
-    state = {recipeData: [], ingredientData: [], stepData: []}
+    state = {recipeData: [], ingredientData: [], stepData: [], editClick: false}
 
     componentDidMount() {
         fetch(settings.api_uri + this.props.id)
@@ -20,10 +22,16 @@ class Recipe extends React.Component {
     }
 
     render() {
-        console.log(this.state)
+        const handleEditOnClick = () => {
+            this.setState({editClick: true})    
+        }
+
         return (
             <div>
+                {this.state.editClick ? <Redirect to={`/updaterecipe/${this.props.id}`} /> :
+                <div>
                     <h1>{this.state.recipeData.name}</h1>
+                    <p>{this.state.recipeData.description}</p>
                     <h2>Ingredients:</h2>
                     {this.state.ingredientData.map(
                         (row) => 
@@ -36,6 +44,15 @@ class Recipe extends React.Component {
                     )}
                     <h2>Tags:</h2>
                     {this.state.recipeData.tags}
+
+                    <Button variant="contained" color="primary" onClick={handleEditOnClick}>
+                        Edit Recipe
+                    </Button>
+                    <Button variant="outlined" color="primary">
+                        Delete Recipe
+                    </Button>
+                </div>
+            }
             </div>
         )
     }

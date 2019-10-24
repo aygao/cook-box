@@ -31,7 +31,7 @@ import { Redirect } from 'react-router'
 class SimpleCard extends React.Component {
     // classes = useStyles();
     //const bull = <span className={classes.bullet}>•</span>;
-    state={cardClick: false}
+    state={cardClick: false, editClick: false}
 
 
     
@@ -39,9 +39,16 @@ class SimpleCard extends React.Component {
         const handleOnClick = () => {
             this.setState({cardClick: true})    
         }
+
+        const handleEditOnClick = () => {
+            this.setState({editClick: true})    
+        }
+
         return (
             <div>
-                {this.state.cardClick ? <Redirect to={`/recipe/${this.props.recipeData.recipe_id}`} /> :
+                {this.state.editClick ? <Redirect to={`/updaterecipe/${this.props.recipeData.recipe_id}`} /> :
+                this.state.cardClick ? <Redirect to={`/recipe/${this.props.recipeData.recipe_id}`} /> 
+                    : 
                     <div onClick={handleOnClick}>
                     <Card>
                         <CardContent>
@@ -62,7 +69,7 @@ class SimpleCard extends React.Component {
                         </CardContent>
                         <CardActions>
                             <div>
-                                <IconButton>
+                                <IconButton onClick={handleEditOnClick}>
                                     <EditOutlinedIcon/>
                                 </IconButton>
                                 <IconButton>
