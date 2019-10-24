@@ -8,6 +8,13 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { Redirect } from 'react-router'
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import {settings} from '../settings/config'
 
 
 // const useStyles = makeStyles({
@@ -31,25 +38,57 @@ import { Redirect } from 'react-router'
 class SimpleCard extends React.Component {
     // classes = useStyles();
     //const bull = <span className={classes.bullet}>•</span>;
-    state={cardClick: false, editClick: false}
+    
+    constructor(props) {
+        super(props)
+        this.state={cardClick: false, editClick: false, isHover: false, deleteOpen: false}
 
-
+    }
     
     render() {
         const handleOnClick = () => {
             this.setState({cardClick: true})    
         }
 
-        const handleEditOnClick = () => {
+        const handleEditOnClick = (e) => {
+            e.stopPropagation()
             this.setState({editClick: true})    
+        }
+
+        const handleMouseOver = () => {
+            this.setState({isHover: true})
+        }
+
+        const handleMouseOut = () => {
+            this.setState({isHover: false})
+        }
+
+        const handleDeleteOpen = (e) => {
+            e.stopPropagation()
+            this.setState({deleteOpen: true})
+        }
+
+        const handleCancelClose = (e) => {
+            e.stopPropagation()
+            this.setState({deleteOpen: false})
+        }
+
+        const handleDeleteClose = (e) => {
+            e.stopPropagation()
+
+            fetch(settings.api_uri + this.props.recipeData.recipe_id, {
+                method: 'DELETE',
+            }).catch(err => err);
+
+            this.setState({deleteOpen: false})
+           // this.props.handleDelete()
         }
 
         return (
             <div>
                 {this.state.editClick ? <Redirect to={`/updaterecipe/${this.props.recipeData.recipe_id}`} /> :
-                this.state.cardClick ? <Redirect to={`/recipe/${this.props.recipeData.recipe_id}`} /> 
-                    : 
-                    <div onClick={handleOnClick}>
+                    this.state.cardClick ? <Redirect to={`/recipe/${this.props.recipeData.recipe_id}`} /> : 
+                    <div onClick={handleOnClick} onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut}>
                     <Card>
                         <CardContent>
                             <Typography color="textSecondary" gutterBottom>
@@ -67,26 +106,46 @@ class SimpleCard extends React.Component {
                             {this.props.recipeData.tags}
                             </Typography>
                         </CardContent>
-                        <CardActions>
-                            <div>
-                                <IconButton onClick={handleEditOnClick}>
-                                    <EditOutlinedIcon/>
-                                </IconButton>
-                                <IconButton>
-                                    <DeleteForeverOutlinedIcon/>
-                                </IconButton>
-                            </div>
-                        </CardActions>
+                        {/* <CardActions> */}
+                            {!this.state.isHover ? <div></div> :
+                                <div>
+                                    <IconButton onClick={handleEditOnClick}>
+                                        <EditOutlinedIcon/>
+                                    </IconButton>
+                                    <IconButton onClick={handleDeleteOpen}>
+                                        <DeleteForeverOutlinedIcon/>
+                                    </IconButton>
+                                </div>
+                            }
+                        {/* </CardActions> */}
                     </Card>
+
+                    <Dialog
+                        open={this.state.deleteOpen}
+                        onClose={handleDeleteClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">{"Are you sure you want to delete this recipe?"}</DialogTitle>
+                        <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            The recipe will be deleted permanently and cannot be recovered.
+                        </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                        <Button onClick={handleCancelClose} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={handleDeleteClose} color="primary" autoFocus>
+                            Delete
+                        </Button>
+                        </DialogActions>
+                    </Dialog>
                 </div>
-                
                 }
-                
             </div>
-            
-            );
-    }
-    
+        );
+    }  
 }
 
 export default SimpleCard

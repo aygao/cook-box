@@ -15,6 +15,18 @@ class Dashboard extends React.Component {
             .then(res => this.setState({ recipeData: res }));
     }
 
+    componentDidUpdate() {
+        fetch(settings.api_uri)
+            .then(res => res.json())
+            .then(res => this.setState({ recipeData: res }));
+    }
+
+    // handleDelete = () => {
+    //     this.setState(prevState => ({refresh: !prevState.refresh}))
+        
+    // }
+   
+
     render() {
         return (
             <div>
@@ -22,7 +34,7 @@ class Dashboard extends React.Component {
                     {this.state.recipeData.map(
                         (row) => 
                             <Grid key={row.recipe_id} item xs={3}>
-                                <RecipeCard key={row.recipe_id} recipeData={row}>xs=3</RecipeCard>
+                                <RecipeCard handleDelete={this.handleDelete} key={row.recipe_id} recipeData={row}>xs=3</RecipeCard>
                             </Grid>
                     )} 
                 </Grid>
