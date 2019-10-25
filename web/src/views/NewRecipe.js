@@ -5,6 +5,7 @@ import {settings} from '../settings/config'
 import update from 'react-addons-update'
 import Chip from '@material-ui/core/Chip';
 import { withRouter } from "react-router-dom"
+import NavBar from '../components/NavBar'
 
 class NewRecipe extends React.Component {
 
@@ -143,7 +144,9 @@ class NewRecipe extends React.Component {
 
         return (
             <div>
-
+                <div>
+                    <NavBar />
+                </div>
                 <TextField
                     required
                     error = {this.state.isNameError ? true : false}

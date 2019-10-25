@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 
 class Dashboard extends React.Component {
 
-    state = {recipeData: []}
+    state = {recipeData: [], searchField: ''}
 
     componentDidMount() {
         fetch(settings.api_uri)
@@ -21,11 +21,17 @@ class Dashboard extends React.Component {
             .then(res => this.setState({ recipeData: res }));
     }
    
+    handleSearchChange = event => {
+        this.setState({searchField: event.target.value})
+    }
 
     render() {
         return (
             <div>
-                {console.log(this.state)}
+                <div>
+                    <NavBar hasSearch={true} onChange={this.handleSearchChange} />
+                </div>
+                {/* {console.log(this.state)} */}
                 <Grid container spacing={3}>
                     {this.state.recipeData.map(
                         (row) => 
