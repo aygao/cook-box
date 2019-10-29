@@ -13,23 +13,24 @@ const NavBar = (props) => {
 
     return (
         <div className="nav-bar">
-            <NavLink to="/dashboard" >Cook Box</NavLink>
+            <NavLink className="nav-links" to="/dashboard" >Cook Box</NavLink>
             {props.hasSearch ?
                 <Input
                     className="search-bar"
-                    placeholder="Search"
+                    disableUnderline
+                    placeholder="search"
                     startAdornment={<InputAdornment position="start"><SearchIcon /></InputAdornment>}
                     onChange={props.onChange()}
                     //className={classes.input}
                     inputProps={{
                         'aria-label': 'description',
-                        style: {fontSize: 36, lineHeight: 36, letterSpacing: '.5px'}
+                        style: {fontSize: 32, lineHeight: 32, letterSpacing: '.5px'}
                     }}
 
               />
                 : <div></div>}
-            <NavLink to="/newrecipe">New Recipe</NavLink>
-            <Button color="inherit">Login</Button>
+            <NavLink className="nav-links" to="/newrecipe">New Recipe</NavLink>
+            {/* <Button color="inherit">Login</Button> */}
                 
         </div>
     );

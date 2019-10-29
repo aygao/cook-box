@@ -7,6 +7,7 @@ import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper'
 import history from '../utils/History'
 import { withRouter } from "react-router-dom"
+import NavBar from '../components/NavBar'
 
 
 class UpdateRecipe extends React.Component {
@@ -164,7 +165,10 @@ class UpdateRecipe extends React.Component {
         
         return (
             <div>
-                {console.log(this.state)}
+                {/* {console.log(this.state)} */}
+                <div>
+                    <NavBar hasSearch={false} />
+                </div>
                 <TextField
                     required
                     error = {this.state.isNameError ? true : false}

@@ -96,7 +96,7 @@ class SimpleCard extends React.Component {
                 {this.state.editClick ? <Redirect to={`/updaterecipe/${this.props.recipeData.recipe_id}`} /> :
                     this.state.cardClick ? <Redirect to={`/recipe/${this.props.recipeData.recipe_id}`} /> : 
                     <div onClick={handleOnClick} onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut}>
-                    <Card>
+                    <Card className="recipe-card">
                         <CardContent>
                             <Typography color="textSecondary" gutterBottom>
                             Recipe
@@ -115,7 +115,7 @@ class SimpleCard extends React.Component {
                         </CardContent>
                         {/* <CardActions> */}
                             {!this.state.isHover ? <div></div> :
-                                <div>
+                                <div className="card-buttons">
                                     <IconButton onClick={handleEditOnClick}>
                                         <EditOutlinedIcon/>
                                     </IconButton>

@@ -5,7 +5,7 @@ import UpdateRecipe from './UpdateRecipe'
 const RenderUpdatePage = (props) => {
     console.log(props)
     return(
-        <div>Update page for {props.match.params.id}
+        <div>
         <UpdateRecipe id={props.match.params.id}></UpdateRecipe>
         </div>
     )    

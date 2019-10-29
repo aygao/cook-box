@@ -8,6 +8,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import NavBar from '../components/NavBar'
  
 
 class Recipe extends React.Component {
@@ -58,9 +59,12 @@ class Recipe extends React.Component {
 
         return (
             <div>
-                {console.log(this.state)}
+                {/* {console.log(this.state)} */}
                 {this.state.editClick ? <Redirect to={`/updaterecipe/${this.props.id}`} /> :
                 <div>
+                    <div>
+                        <NavBar hasSearch={false} />
+                    </div>
                     <h1>{this.state.recipeData.name}</h1>
                     <p>{this.state.recipeData.description}</p>
                     <h2>Ingredients:</h2>

@@ -3,7 +3,8 @@ import NavBar from '../components/NavBar'
 import Sidebar from '../components/Sidebar'
 import RecipeCard from '../components/RecipeCard'
 import {settings} from '../settings/config'
-import Grid from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid'
+import Container from '@material-ui/core/Container'
 
 class Dashboard extends React.Component {
 
@@ -27,7 +28,11 @@ class Dashboard extends React.Component {
         if(event.target.value === '') {
             this.setState({searchedRecipes: this.state.recipeData})
         } else {
-            this.setState({searchedRecipes: this.state.recipeData.filter(recipe => recipe.name.toLowerCase().includes(event.target.value.toLowerCase()))})
+            this.setState({searchedRecipes: this.state.recipeData.filter(
+                recipe => recipe.name.toLowerCase().includes(event.target.value.toLowerCase())
+                || recipe.description.toLowerCase().includes(event.target.value.toLowerCase())
+                || recipe.tags.join(' ').toLowerCase().includes(event.target.value.toLowerCase())
+            )})
         }
         // this.setState({searchedRecipes: filteredRecipes})   
     }
@@ -39,6 +44,7 @@ class Dashboard extends React.Component {
                     <NavBar hasSearch={true} onChange={this.handleSearchChange} />
                 </div>
                 {/* {console.log(this.state)} */}
+                <Container maxWidth="lg">
                 <Grid container spacing={3} className="recipe-grid">
                     {this.state.searchedRecipes.map(
                         (row) => 
@@ -47,6 +53,7 @@ class Dashboard extends React.Component {
                             </Grid>
                     )} 
                 </Grid>
+                </Container>
             </div>
         )
     }

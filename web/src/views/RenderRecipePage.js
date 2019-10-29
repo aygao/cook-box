@@ -5,7 +5,7 @@ import Recipe from './Recipe'
 const RenderRecipePage = (props) => {
     console.log(props)
     return(
-        <div>Recipe Page for {props.match.params.id}
+        <div>
         <Recipe id={props.match.params.id}></Recipe>
         </div>
     )    

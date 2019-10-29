@@ -145,7 +145,7 @@ class NewRecipe extends React.Component {
         return (
             <div>
                 <div>
-                    <NavBar />
+                    <NavBar hasSearch={false} />
                 </div>
                 <TextField
                     required
