@@ -116,10 +116,10 @@ class SimpleCard extends React.Component {
                         {/* <CardActions> */}
                             {!this.state.isHover ? <div></div> :
                                 <div className="card-buttons">
-                                    <IconButton onClick={handleEditOnClick}>
+                                    <IconButton onClick={handleEditOnClick} color='inherit'>
                                         <EditOutlinedIcon/>
                                     </IconButton>
-                                    <IconButton onClick={handleDeleteOpen}>
+                                    <IconButton onClick={handleDeleteOpen} color='inherit'>
                                         <DeleteForeverOutlinedIcon/>
                                     </IconButton>
                                 </div>

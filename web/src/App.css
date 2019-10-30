@@ -1,10 +1,13 @@
+body{
+    background-color: whitesmoke;
+}
+
 .App {
     text-align: center;
     background-color: whitesmoke;
-    height: 100vh;
 }
 
-.App-logo {
+/* .App-logo {
     height: 40vmin;
 }
 
@@ -17,21 +20,21 @@
     justify-content: center;
     font-size: calc(10px + 2vmin);
     color: white;
-}
+} */
 
 .App-link {
      color: #09d3ac;
 }
 
 .nav-bar {
-    display: 'flex';
+    display: flex;
     flex-direction: row;
     position:fixed;
     top:0;
     width: 100%;
     justify-content: space-between;
-    align-items: flex-end;
-    height: 50px;
+    align-items: center;
+    height: 60px;
     color: whitesmoke;
     background-color: white;
     /* border-bottom: .2vh solid whitesmoke; */
@@ -41,23 +44,60 @@
 }
 
 .nav-links {
-    color: #000;
+    /* color: #8BA93E; */
     text-decoration: none;
     vertical-align: middle;
-    font-size: 2em;
+    flex-grow: 1;
 }
 
-.nav-links:visited {
-    color: #000;
+.nav-links.cook-box {
+    color: #8BA93E;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.rew-recipe {
+    color: white;
+    background-color: #de6a57;
+    flex-grow: 1;
+}
+
+.cook-box:visited {
+    color: #8BA93E;
+}
+
+.new-recipe:visited {
+    color: white;
+    
+}
+
+.new-recipe-bg {
+    vertical-align: middle;
+    flex-grow: 1;
+    background-color: #de6a57;
+    border-radius: 15px;
+    height: 60%;
+    min-width: 5%;
 }
 
 .search-bar {
     /* display: 'flex'; */
     min-width: 50%;
-    max-width: 60%;
-    height: 100%;
-    margin: 0 5vh 0 5vh;
+    /* max-width: 60%; */
+    height: 85%;
+    /* margin: 0 5vh 0 5vh; */
     vertical-align: middle;
+    flex-grow: 2;
+    flex-basis: 50%;
+    /* padding:22px; */
+    transition: .2s ease-out
+}
+
+.search-bar.Mui-focused {
+    border-radius: 25px;
+    border: 1.5px solid #8BA93E;
+    padding: 20px;
+    transition: all .1s ease-out;
 }
 
 .recipe-grid {
@@ -70,15 +110,18 @@
     position:relative;
     height: 300px;
     min-width: 200px;
+    max-width: 400px;
+    box-shadow: 0 3px 5px -2px rgba(112, 180, 67, 0.575);
 }
 
 .card-buttons {
     position:absolute;
+    color:whitesmoke;
     z-index: 1;
-    background: rgba(196, 202, 230, 0.9);
+    /* background: rgba(185, 100, 107, 0.918); */
+    background: #3e8ba9;
     bottom:0px;
     right:0px;
     width:100%;
-    transition-timing-function: ease-in-out;
-    transition: .2s;
+    transition: background .2s linear;
 }

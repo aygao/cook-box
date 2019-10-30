@@ -37,6 +37,7 @@ class Dashboard extends React.Component {
         // this.setState({searchedRecipes: filteredRecipes})   
     }
 
+
     render() {
         return (
             <div>
@@ -45,7 +46,7 @@ class Dashboard extends React.Component {
                 </div>
                 {/* {console.log(this.state)} */}
                 <Container maxWidth="lg">
-                <Grid container spacing={3} className="recipe-grid">
+                <Grid container spacing={5} className="recipe-grid">
                     {this.state.searchedRecipes.map(
                         (row) => 
                             <Grid key={row.recipe_id} item xs={3}>
