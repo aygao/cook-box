@@ -8,7 +8,10 @@ import InputAdornment from "@material-ui/core/InputAdornment"
 import SearchIcon from "@material-ui/icons/Search"
 import TextField from '@material-ui/core/TextField'
 import lightGreen from '@material-ui/core/colors/lightGreen'
-import { Redirect } from 'react-router'
+import { withRouter } from 'react-router-dom'
+import theme from '../utils/muiTheme'
+import { ThemeProvider } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid';
 
 
 
@@ -19,40 +22,47 @@ class NavBar extends React.Component {
     render() {
 
         const handleNewRecipeClick = () => {
-            this.setState({newRecipeClick: true})    
+            this.props.history.push("/newrecipe")
         }
 
         return (
             <div>
-            
-                {this.state.newRecipeClick ? <Redirect to={`/newrecipe`} /> :
                 <div className="nav-bar">
+                    <Grid className="nav-grid" container spacing={3}>
+                        <Grid className="nav-grid-elem" item xs={4} md={2} lg={2}>
+                            <NavLink className="cook-box" to="/dashboard" >Cook Box</NavLink>
+                        </Grid>
+                        <Grid className="nav-grid-elem" item xs={4} md={8} lg={8}>
                     
-                    <NavLink className="nav-links cook-box" to="/dashboard" >Cook Box</NavLink>
-                    {this.props.hasSearch ?
-                        <Input
-                            className="search-bar"
-                            disableUnderline
-                            placeholder="search"
-                            startAdornment={<InputAdornment position="start"><SearchIcon /></InputAdornment>}
-                            onChange={this.props.onChange()}
-                            //className={classes.input}
-                            inputProps={{
-                                'aria-label': 'description',
-                                style: {fontSize: 32, lineHeight: 32, letterSpacing: '.5px'}
-                            }}
+                            {this.props.hasSearch ?
+                                <Input
+                                    className="search-bar"
+                                    disableUnderline
+                                    placeholder="search"
+                                    startAdornment={<InputAdornment position="start"><SearchIcon /></InputAdornment>}
+                                    onChange={this.props.onChange()}
+                                    //className={classes.input}
+                                    inputProps={{
+                                        'aria-label': 'description',
+                                        style: {fontSize: 28, lineHeight: 28, letterSpacing: '.5px'}
+                                    }}
 
-                    />
-                        : <div className="search-bar"></div>}
-                     <Button variant="contained" size="large" color="primary" className="new-recipe" onClick={handleNewRecipeClick}>New Recipe</Button>
+                            />
+                                : <div className="search-bar"></div>}
+                        </Grid>
+                        <Grid className="nav-grid-elem" item xs={4} md={2} lg={2}>
+                            {/* <ThemeProvider theme={theme}> */}
+                                <button className="new-recipe" onClick={handleNewRecipeClick}>New Recipe</button>
+                            {/* </ThemeProvider> */}
+                        </Grid>
+                    </Grid>
+                    
                     {/* <Button color="inherit">Login</Button> */}
                 
                 </div>
-                }
-               
             </div>
         );
     }
 }
 
-export default NavBar
+export default withRouter(NavBar)

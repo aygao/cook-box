@@ -15,6 +15,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {settings} from '../settings/config'
+import { withRouter } from 'react-router-dom'
 
 
 // const useStyles = makeStyles({
@@ -41,18 +42,18 @@ class SimpleCard extends React.Component {
     
     constructor(props) {
         super(props)
-        this.state={cardClick: false, editClick: false, isHover: false, deleteOpen: false}
+        this.state={isHover: false, deleteOpen: false}
 
     }
     
     render() {
-        const handleOnClick = () => {
-            this.setState({cardClick: true})    
+        const handleOnClick = () => {  
+            this.props.history.push("/recipe/" + this.props.recipeData.recipe_id)
         }
 
         const handleEditOnClick = (e) => {
             e.stopPropagation()
-            this.setState({editClick: true})    
+            this.props.history.push("/updaterecipe/" + this.props.recipeData.recipe_id) 
         }
 
         const handleMouseOver = () => {
@@ -93,9 +94,7 @@ class SimpleCard extends React.Component {
 
         return (
             <div>
-                {this.state.editClick ? <Redirect to={`/updaterecipe/${this.props.recipeData.recipe_id}`} /> :
-                    this.state.cardClick ? <Redirect to={`/recipe/${this.props.recipeData.recipe_id}`} /> : 
-                    <div onClick={handleOnClick} onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut}>
+                <div onClick={handleOnClick} onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut}>
                     <Card className="recipe-card">
                         <CardContent>
                             <Typography color="textSecondary" gutterBottom>
@@ -149,10 +148,9 @@ class SimpleCard extends React.Component {
                         </DialogActions>
                     </Dialog>
                 </div>
-                }
             </div>
         );
     }  
 }
 
-export default SimpleCard
+export default withRouter(SimpleCard)

@@ -12,7 +12,7 @@ import NavBar from '../components/NavBar'
  
 
 class Recipe extends React.Component {
-    state = {recipeData: [], ingredientData: [], stepData: [], editClick: false, deleteOpen: false}
+    state = {recipeData: [], ingredientData: [], stepData: [], deleteOpen: false}
 
     componentDidMount() {
         console.log("hello")
@@ -33,7 +33,7 @@ class Recipe extends React.Component {
     render() {
 
         const handleEditOnClick = () => {
-            this.setState({editClick: true})    
+            this.props.history.push("/updaterecipe/" + this.props.id) 
         }
 
         const handleDeleteOnClick = (e) => {
@@ -60,7 +60,6 @@ class Recipe extends React.Component {
         return (
             <div>
                 {/* {console.log(this.state)} */}
-                {this.state.editClick ? <Redirect to={`/updaterecipe/${this.props.id}`} /> :
                 <div>
                     <div>
                         <NavBar hasSearch={false} />
@@ -109,7 +108,6 @@ class Recipe extends React.Component {
                         </DialogActions>
                     </Dialog>
                 </div>
-            }
             </div>
         )
     }

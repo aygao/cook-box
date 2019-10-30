@@ -49,7 +49,7 @@ class Dashboard extends React.Component {
                 <Grid container spacing={5} className="recipe-grid">
                     {this.state.searchedRecipes.map(
                         (row) => 
-                            <Grid key={row.recipe_id} item xs={3}>
+                            <Grid key={row.recipe_id} item xs={6} md={3} lg={3}>
                                 <RecipeCard handleRefresh={this.handleRefresh} key={row.recipe_id} recipeData={row}>xs=3</RecipeCard>
                             </Grid>
                     )} 
