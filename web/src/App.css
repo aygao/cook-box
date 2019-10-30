@@ -55,9 +55,10 @@ body{
 .cook-box {
     color: #8BA93E;
     font-size: 2em;
-    font-weight: bold;
+    font-weight: 700;
     text-decoration: none;
     flex-grow:1;
+    font-family: 'Courgette', sans-serif;
 }
 
 .cook-box:hover {
