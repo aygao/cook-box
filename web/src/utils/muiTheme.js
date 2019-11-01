@@ -36,7 +36,8 @@ const theme = createMuiTheme({
     },
     subtitle2: {
       textTransform: 'uppercase',
-      textAlign:'left'
+      textAlign:'left',
+      color: '#8BA93E'
     },
     body2: {
       textAlign:'left',

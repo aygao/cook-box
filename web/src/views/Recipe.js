@@ -9,13 +9,18 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import NavBar from '../components/NavBar'
+import '../RecipePage.scss';
+import theme from '../utils/muiTheme'
+import { ThemeProvider } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container'
+import Chip from '@material-ui/core/Chip';
  
 
 class Recipe extends React.Component {
     state = {recipeData: [], ingredientData: [], stepData: [], deleteOpen: false}
 
     componentDidMount() {
-        console.log("hello")
         fetch(settings.api_uri + this.props.id)
             .then(res => res.json())
             .then(res => this.setState({ recipeData: res }));
@@ -60,54 +65,107 @@ class Recipe extends React.Component {
         return (
             <div>
                 {/* {console.log(this.state)} */}
+    
                 <div>
-                    <div>
-                        <NavBar hasSearch={false} />
-                    </div>
-                    <h1>{this.state.recipeData.name}</h1>
-                    <p>{this.state.recipeData.description}</p>
-                    <h2>Ingredients:</h2>
-                    {this.state.ingredientData.map(
-                        (row) => 
-                            <p key={row.ingredient_id}>{row.quantity} {row.name} {row.info}</p>
-                    )} 
-                    <h2>Instructions:</h2>
-                    {this.state.stepData.map(
-                        (row) =>
-                            <p key={row.step_num}>{row.step_num} {row.info}</p>
-                    )}
-                    <h2>Tags:</h2>
-                    {this.state.recipeData.tags}
-
-                    <Button variant="contained" color="primary" onClick={handleEditOnClick}>
-                        Edit Recipe
-                    </Button>
-                    <Button variant="outlined" color="primary" onClick={handleDeleteOnClick}>
-                        Delete Recipe
-                    </Button>
-
-                    <Dialog
-                        open={this.state.deleteOpen}
-                        onClose={handleDeleteClose}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description"
-                    >
-                        <DialogTitle id="alert-dialog-title">{"Are you sure you want to delete this recipe?"}</DialogTitle>
-                        <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            The recipe will be deleted permanently and cannot be recovered.
-                        </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                        <Button onClick={handleCancelClose} color="primary">
-                            Cancel
-                        </Button>
-                        <Button onClick={handleDeleteClose} color="primary" autoFocus>
-                            Delete
-                        </Button>
-                        </DialogActions>
-                    </Dialog>
+                    <NavBar hasSearch={false} />
                 </div>
+                <Container maxWidth="lg">
+                    <div className="recipe-page">
+                        
+
+                        <div className="recipe-content">
+                            <div className="recipe-intro">
+                                <ThemeProvider theme={theme}>
+                                    <Typography variant="h6">
+                                        {this.state.recipeData.name}
+                                    </Typography>
+                                    <div className="recipe-photo">
+                                        <img src={require("../test.jpeg")} width="100%" alt="cookiesss"/>
+                                    </div>
+                                    <div className="recipe-desc">
+                                        <Typography variant="body1">
+                                            {this.state.recipeData.description}
+                                        </Typography>
+                                    </div>
+                                    {/* <Typography variant="subtitle2">
+                                        Tags
+                                    </Typography> */}
+                                    <Typography variant="overline">                                    
+                                        {this.state.recipeData.tags !== undefined ? this.state.recipeData.tags.map(
+                                            tag => 
+                                            <Chip
+                                                key={tag}
+                                                label={tag}
+                                                color='primary'
+                                                variant='outlined'
+                                                size='small'
+                                                style= {{margin: "2px"}}
+                                            />
+                                        ) : ''
+                                    }
+                                    </Typography>
+                                </ThemeProvider>
+                            </div>
+                            <div className="recipe-ingr">
+                                <Typography variant="subtitle2">
+                                    Ingredients
+                                </Typography>
+                                <Typography variant="body1">
+                                    {this.state.ingredientData.map(
+                                        (row) => 
+                                            <ul>
+                                                <li key={row.ingredient_id}>{row.quantity} {row.name}{row.notes == null ? '' : ', ' }{row.notes}</li>
+                                            </ul>
+                                    )} 
+                                </Typography>
+                            </div>
+                            <div className="recipe-steps">
+                                <Typography variant="subtitle2">
+                                    Instructions
+                                </Typography>
+                                <Typography variant="body1">
+                                    <ol>
+                                        {this.state.stepData.map(
+                                            (row) =>
+                                                <li key={row.step_num}> {row.info}</li>
+                                        )}
+                                    </ol>
+                                </Typography>
+                            </div>
+                        </div>
+                        <div className="recipe-buttons">
+                            <button className="edit-recipe" onClick={handleEditOnClick}>
+                                Edit Recipe
+                            </button>
+                            <button className="delete-recipe" onClick={handleDeleteOnClick}>
+                                Delete Recipe
+                            </button>
+                        </div>
+                       
+
+                        <Dialog
+                            open={this.state.deleteOpen}
+                            onClose={handleDeleteClose}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">{"Are you sure you want to delete this recipe?"}</DialogTitle>
+                            <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                The recipe will be deleted permanently and cannot be recovered.
+                            </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                            <Button onClick={handleCancelClose} color="primary">
+                                Cancel
+                            </Button>
+                            <Button onClick={handleDeleteClose} color="primary" autoFocus>
+                                Delete
+                            </Button>
+                            </DialogActions>
+                        </Dialog>
+                    </div>
+                </Container>
             </div>
         )
     }

@@ -1,6 +1,6 @@
 html, body {
     height: 100%;
-    background-color: white;
+    background-color: whitesmoke;
     overflow:scroll;
 }
 
@@ -122,7 +122,6 @@ html, body {
 .recipe-grid {
     position:relative;
     top:100px;
-
 }
 
 .recipe-card {
@@ -244,6 +243,6 @@ $card-desc-lines-to-show: 4;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis;
-    width: 65%;
+    // width: 100%;
     text-align:left;
 }
