@@ -16,25 +16,11 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {settings} from '../settings/config'
 import { withRouter } from 'react-router-dom'
+import theme from '../utils/muiTheme'
+import { ThemeProvider } from '@material-ui/core/styles'
+import CardMedia from '@material-ui/core/CardMedia'
+import CardHeader from '@material-ui/core/CardHeader';
 
-
-// const useStyles = makeStyles({
-//     card: {
-//         minWidth: 275,
-//         height: 375
-//     },
-//     bullet: {
-//         display: 'inline-block',
-//         margin: '0 2px',
-//         transform: 'scale(0.8)',
-//     },
-//     title: {
-//         fontSize: 14,
-//     },
-//     pos: {
-//         marginBottom: 12,
-//     },
-// });
 
 class SimpleCard extends React.Component {
     // classes = useStyles();
@@ -96,32 +82,56 @@ class SimpleCard extends React.Component {
             <div>
                 <div onClick={handleOnClick} onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut}>
                     <Card className="recipe-card">
-                        <CardContent>
-                            <Typography color="textSecondary" gutterBottom>
-                            Recipe
-                            </Typography>
-                            <Typography variant="h5" component="h2">
-                            {this.props.recipeData.name}
-                            </Typography>
-                            <Typography color="textSecondary">
-                            {this.props.recipeData.servings}
-                            </Typography>
-                            <Typography variant="body2" component="p">
-                            {this.props.recipeData.description}
-                            <br />
-                            {this.props.recipeData.tags}
-                            </Typography>
-                        </CardContent>
+                        <ThemeProvider theme={theme}>
+     
+                            <CardMedia
+                                component="img"
+                                alt="Contemplative Reptile"
+                                height="200"
+                                image={require ("../test.jpeg")}
+                                title="test food image"
+                            />
+            
+                            <CardHeader
+                                title={this.props.recipeData.name}
+                                titleTypographyProps= {{variant:"h6"}}
+                            />
+
+                            <CardContent>
+                                <div className="card-desc">
+                                <Typography variant="body2" component="p">
+                                    
+                                    {this.props.recipeData.description}
+                                   
+                                </Typography>
+                                </div>
+                            </CardContent>
+                            <CardContent>
+                                <div className="card-tags">
+                                <Typography variant="overline">
+                                {/* <div className="card-tags"> */}
+                                    {this.props.recipeData.tags.join(' • ')}
+                                {/* </div> */}
+                                </Typography>
+                                </div>
+                            </CardContent>
+
+                        </ThemeProvider>
+                        
                         {/* <CardActions> */}
                             {!this.state.isHover ? <div></div> :
-                                <div className="card-buttons">
+                            <div className="card-buttons">
+                                <div className="card-button-edit">
                                     <IconButton onClick={handleEditOnClick} color='inherit'>
                                         <EditOutlinedIcon/>
                                     </IconButton>
+                                </div>
+                                <div className="card-button-delete">
                                     <IconButton onClick={handleDeleteOpen} color='inherit'>
                                         <DeleteForeverOutlinedIcon/>
                                     </IconButton>
                                 </div>
+                            </div>
                             }
                         {/* </CardActions> */}
                     </Card>

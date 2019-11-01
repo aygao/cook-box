@@ -1,6 +1,6 @@
 import React from 'react';
 //import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 import Dashboard from './views/Dashboard'
 import {
     BrowserRouter as Router,

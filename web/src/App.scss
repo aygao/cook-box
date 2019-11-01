@@ -1,0 +1,249 @@
+html, body {
+    height: 100%;
+    background-color: white;
+    overflow:scroll;
+}
+
+
+.App {
+    text-align: center;
+    background-color: whitesmoke;
+
+}
+
+/* .App-logo {
+    height: 40vmin;
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+} */
+
+.App-link {
+     color: #09d3ac;
+}
+
+.nav-bar {
+    display: flex;
+    flex-direction: row;
+    position:fixed;
+    top:0;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    height: 65px;
+    color: whitesmoke;
+    background-color: white;
+    /* border-bottom: .2vh solid whitesmoke; */
+    /* margin: 0 0 5vh 0; */
+    box-shadow: 0 3px 5px -2px rgba(0,0,0,.2);
+    z-index: 1;
+}
+
+.nav-grid {
+    height:100%;
+}
+
+.nav-grid-elem {
+    height:100%;
+}
+
+.cook-box {
+    color: #8BA93E;
+    font-size: 2em;
+    font-weight: 700;
+    text-decoration: none;
+    flex-grow:1;
+    font-family: 'Courgette', sans-serif;
+    &:hover {
+        color: rgb(126, 150, 67);
+    }
+    
+    &:active {
+        color: rgb(99, 119, 50);
+    }
+}
+
+.new-recipe {
+    color: white;
+    background-color: #de6a57;
+    flex-grow: 1;
+    border:none;
+    height:100%;
+    font-size: 1em;
+    font-weight:bold;
+    border-radius: 25px;
+    padding: 0 20px 0 20px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 2px -2px lightgrey;
+    outline:0;
+    &:hover {
+        cursor:pointer;
+        background-color: #ca5c4b;
+        outline:0;
+    }
+    &:active {
+        outline: 0;
+        box-shadow: inset 0px 0px 5px lightgrey;
+    }
+    &:visited {
+        outline:0;
+    }
+}
+
+
+.search-bar {
+    /* display: 'flex'; */
+    min-width: 100%;
+    max-width: 100%;
+    height: 100%;
+    /* margin: 0 5vh 0 5vh; */
+    /* vertical-align: middle; */
+    flex-grow: 2;
+    flex-basis: 50%;
+    padding:20px;
+    transition: .2s ease-out
+}
+
+.search-bar.Mui-focused {
+    border-radius: 25px;
+    border: 1.5px solid #8BA93E;
+    padding: 20px;
+    transition: all .1s ease-out;
+}
+
+.recipe-grid {
+    position:relative;
+    top:100px;
+
+}
+
+.recipe-card {
+    position:relative;
+    height: 400px;
+    min-width: 200px;
+    max-width: 400px;
+}
+
+.MuiCard-root {
+    box-shadow: 0 4px 2px -2px #3e8ba9, 0 2px 5px lightgrey !important;
+    cursor: pointer;
+    border-radius:3px !important;
+    border: 1px 1px 0 1px solid black !important;
+    background-color: rgb(255, 255, 255) !important;
+    &:hover {
+        top: -2px;
+    }  
+    &:active {
+        top:0;
+        box-shadow: inset 0px 0px 1px rgb(182, 182, 182) !important;
+    }
+}
+
+
+.card-buttons {
+    display:flex;
+    justify-content: flex-end;
+    position:absolute;
+    color:rgb(0, 0, 0);
+    z-index: 1;
+    /* background: rgba(185, 100, 107, 0.918); */
+    background: #3e8ba900;
+    bottom:0;
+    right:0;
+    width:100%;
+    transition: background .2s linear;
+}
+
+.card-button-edit {
+
+    background-color: #cbe0e9;
+    border-radius:100%;
+    margin:2px;
+
+}
+
+.card-button-delete {
+
+    background-color: #cbe0e9;
+    border-radius:100%;
+    margin:2px;
+
+}
+
+
+$font-size: 1.25rem;
+$line-height: 1;
+$lines-to-show: 2;
+.MuiCardHeader-content {
+    display: block !important; /* Fallback for non-webkit */
+    display: -webkit-box !important;
+    max-width: 400px !important;
+    height: $font-size*$line-height*$lines-to-show !important; /* Fallback for non-webkit */
+    margin: 0 auto !important;
+    font-size: $font-size !important;
+    line-height: $line-height !important;
+    -webkit-line-clamp: $lines-to-show !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    margin-bottom:-10px !important;
+}
+
+// .MuiTypography-h6 {
+//     line-height: 1em !important;
+// }
+
+.MuiTypography-root 
+
+// .MuiCardHeader-title {
+//     font-size: 30px !important;
+//   }
+
+
+
+.card-body {
+    height:100px !important;
+    overflow: hidden !important;
+}
+
+$card-desc-font-size: 0.875rem;
+$card-desc-line-height: 1.5;
+$card-desc-lines-to-show: 4;
+.card-desc {
+    display: block !important; /* Fallback for non-webkit */
+    display: -webkit-box !important;
+    max-width: 400px !important;
+    height: ($card-desc-font-size*$card-desc-line-height*$card-desc-lines-to-show) !important; /* Fallback for non-webkit */
+    margin: 0 auto !important;
+    font-size: $card-desc-font-size !important;
+    line-height: $card-desc-line-height !important;
+    -webkit-line-clamp: $card-desc-lines-to-show !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    margin-top: -10px !important;
+    margin-bottom: -10px !important;
+}
+// .MuiTypography-body2 {
+//     font-size: 1.25rem !important;
+// }
+
+.card-tags {
+    // display:block;
+    // height: 20%;
+
+    margin-top:-10px;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    width: 65%;
+    text-align:left;
+}
