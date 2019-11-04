@@ -110,27 +110,28 @@ class Recipe extends React.Component {
                                 <Typography variant="subtitle2">
                                     Ingredients
                                 </Typography>
-                                <Typography variant="body1">
                                     {this.state.ingredientData.map(
                                         (row) => 
                                             <ul>
+                                                <Typography variant="body1">
                                                 <li key={row.ingredient_id}>{row.quantity} {row.name}{row.notes == null ? '' : ', ' }{row.notes}</li>
+                                                </Typography>
                                             </ul>
                                     )} 
-                                </Typography>
                             </div>
                             <div className="recipe-steps">
                                 <Typography variant="subtitle2">
                                     Instructions
                                 </Typography>
-                                <Typography variant="body1">
+                                
                                     <ol>
                                         {this.state.stepData.map(
                                             (row) =>
+                                                <Typography variant="body1">
                                                 <li key={row.step_num}> {row.info}</li>
+                                                </Typography>
                                         )}
                                     </ol>
-                                </Typography>
                             </div>
                         </div>
                         <div className="recipe-buttons">
