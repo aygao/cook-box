@@ -8,7 +8,15 @@ import Paper from '@material-ui/core/Paper'
 import history from '../utils/History'
 import { withRouter } from "react-router-dom"
 import NavBar from '../components/NavBar'
-import '../NewUpdatePage.scss';
+import '../NewUpdatePage.scss'
+import Container from '@material-ui/core/Container'
+import ImageUploader from 'react-images-upload'
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import theme from '../utils/muiTheme'
+import { ThemeProvider } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 
 class UpdateRecipe extends React.Component {
@@ -170,138 +178,173 @@ class UpdateRecipe extends React.Component {
                 <div>
                     <NavBar hasSearch={false} />
                 </div>
-                <div className="new-update-page">
-                    <TextField
-                        required
-                        error = {this.state.isNameError ? true : false}
-                        id="recipe-name"
-                        label="Recipe Name"
-                        placeholder="Enter your recipe name"
-                        value={this.state.name}
-                        onChange={handleRecipeChange('name')}
-                        margin="normal"
-                        onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
-                        style = {{width: "25%"}}
-                    />
-                    <TextField 
-                        id="recipe-description"
-                        label="Description"
-                        placeholder="Enter a description for your recipe"
-                        multiline
-                        rows="5"
-                        rowsMax="10"
-                        value={this.state.description}
-                        onChange={handleRecipeChange('description')}
-                        margin="normal"
-                        style = {{width: "25%"}}
-                    />
-                    <TextField 
-                        id="user-id"
-                        label="User ID"
-                        value={this.state.user_id}
-                        onChange={handleRecipeChange('user_id')}
-                        margin="normal"
-                    />
+                <Container maxWidth="xl">
+                    <div className="new-update-page">
+                        <ImageUploader
+                            withIcon={true}
+                            buttonText="Choose image"
+                            imgExtension={['.jpg', '.png', '.jpeg']}
+                            maxFileSize={5242880}
+                            style={{width:"80%"}}
+                        />
+                        <div className="recipe-content">
+                            <ThemeProvider theme={theme}>
+                            <div className="recipe-intro">
+                            <TextField
+                                required
+                                error = {this.state.isNameError ? true : false}
+                                id="recipe-name"
+                                label="Recipe Name"
+                                placeholder="Enter your recipe name"
+                                value={this.state.name}
+                                onChange={handleRecipeChange('name')}
+                                margin="normal"
+                                onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
+                                style = {{width: "90%"}}
+                            />
+                            <TextField 
+                                id="recipe-description"
+                                label="Description"
+                                placeholder="Enter a description for your recipe"
+                                multiline
+                                rows="5"
+                                rowsMax="10"
+                                value={this.state.description}
+                                onChange={handleRecipeChange('description')}
+                                margin="normal"
+                                style = {{width: "90%"}}
+                            />
+                            <TextField 
+                                id="user-id"
+                                label="User ID"
+                                value={this.state.user_id}
+                                onChange={handleRecipeChange('user_id')}
+                                margin="normal"
+                            />
+                            <TextField 
+                            id="recipe-tags"
+                            label="Tags"
+                            placeholder="Enter tags for your recipe"
+                            multiline
+                            rows="1"
+                            rowsMax="5"
+                            value={this.state.currTagText}
+                            onChange={handleRecipeChange('currTagText')}
+                            margin="normal"
+                            style = {{width: "90%", marginBottom:"15px"}}
+                            onKeyPress={(e) => {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault()
+                                    handleTagSubmit()
+                                }
+                            }}
+                        />
 
-                    {this.state.ingredients.map((ingredients, index) => {
-                        return (
-                            <div>
-                                <TextField
-                                    // id={index}
-                                    value = {this.state.ingredients[index].quantity}
-                                    onChange={handleIngredientChange(index, 'quantity')}
-                                    placeholder='Enter Quantity'
-                                    label={"Quantity ".concat(index+1)}
-                                />
-                                <TextField
-                                    // id={index}
-                                    value = {this.state.ingredients[index].name}
-                                    onChange={handleIngredientChange(index, 'name')}
-                                    placeholder='Enter Ingredient'
-                                    label={"Ingredient ".concat(index+1)}
-                                />
-                                <TextField
-                                    // id={index}
-                                    value = {this.state.ingredients[index].info}
-                                    onChange={handleIngredientChange(index, 'info')}
-                                    placeholder='Enter additional info'
-                                    label={"Info ".concat(index+1)}
-                                />
-                                <button id={index} onClick={() => deleteIngredient(index)}>
-                                    Delete Ingredient
-                                </button>
-                            </div>
-                        )
-                    })}
+                        {this.state.tags.map((tag, index) => {
+                            return (
+                                <div className="tag-chips">
+                                    <Typography variant="overline">
+                                    <Chip
+                                        key={tag}
+                                        //icon={icon}
+                                        label={tag}
+                                        onDelete={handleTagDelete(index)}
+                                        color='primary'
+                                        variant='outlined'
+                                        size='small'
+                                        style= {{margin: "4px"}}
+                                    />
+                                    </Typography>
+                                </div>
+                            )
+                        })}
+                        </div>
 
-                    <Button variant="contained" color="primary" onClick={addIngredient}>
-                        Add Ingredient
-                    </Button>
+                        <div className="recipe-ingr">
+                            <Typography variant="subtitle2">
+                                Ingredients
+                            </Typography>
+                            {this.state.ingredients.map((ingredients, index) => {
+                                return (
+                                    <div className="add-row">
+                                        <TextField
+                                            // id={index}
+                                            value = {this.state.ingredients[index].quantity}
+                                            onChange={handleIngredientChange(index, 'quantity')}
+                                            placeholder='Enter Quantity'
+                                            label={"Quantity"}
+                                            style = {{width: "20%"}}
+                                        />
+                                        <TextField
+                                            // id={index}
+                                            value = {this.state.ingredients[index].name}
+                                            onChange={handleIngredientChange(index, 'name')}
+                                            placeholder='Enter Ingredient'
+                                            label={"Ingredient"}
+                                            style = {{width: "30%", margin: "0 1%"}}
+                                        />
+                                        <TextField
+                                            // id={index}
+                                            value = {this.state.ingredients[index].info}
+                                            onChange={handleIngredientChange(index, 'info')}
+                                            placeholder='Enter additional info'
+                                            label={"Info"}
+                                            style = {{width: "35%"}}
+                                        />
+                                        <button className="delete-btn" id={index} onClick={() => deleteIngredient(index)}>
+                                            <HighlightOffIcon />
+                                        </button>
+                                    </div>
+                                )
+                            })}
 
-                    {this.state.steps.map((step, index) => {
-                        return (
-                            <div>
-                                <TextField
-                                    // id={index}
-                                    multiline
-                                    rows="2"
-                                    rowsMax="10"
-                                    value = {this.state.steps[index]}
-                                    onChange={handleStepChange(index)}
-                                    placeholder='Enter instructions'
-                                    label={"Step Number ".concat(index+1)}
-                                    style = {{width: "50%"}}
-                                />
-                                <button id={index} onClick={() => deleteStep(index)}>
-                                    Delete Step
-                                </button>
-                            </div>
-                        )
-                    })}
+                            <Fab color="primary" size="small" aria-label="add" onClick={addIngredient}>
+                                <AddIcon />
+                            </Fab>
+                        </div>
+                        
+                        <div className="recipe-steps">
+                            <Typography variant="subtitle2">
+                                Instructions
+                            </Typography>
+                            {this.state.steps.map((step, index) => {
+                                return (
+                                    <div className="add-row">
+                                        <TextField
+                                            // id={index}
+                                            multiline
+                                            rows="1"
+                                            rowsMax="5"
+                                            value = {this.state.steps[index]}
+                                            onChange={handleStepChange(index)}
+                                            placeholder='Enter instructions'
+                                            label={index+1}
+                                            style = {{width: "85%"}}
+                                        />
+                                        <button className="delete-btn" id={index} onClick={() => deleteStep(index)}>
+                                            <HighlightOffIcon />
+                                        </button>
+                                    </div>
+                                )
+                            })}
 
-                    <Button variant="contained" color="primary" onClick={addStep}>
-                        Add Step
-                    </Button>
-                    
-                    <TextField 
-                        id="recipe-tags"
-                        label="Tags"
-                        placeholder="Enter tags for your recipe"
-                        multiline
-                        rows="1"
-                        rowsMax="5"
-                        value={this.state.currTagText}
-                        onChange={handleRecipeChange('currTagText')}
-                        margin="normal"
-                        style = {{width: "50%"}}
-                        onKeyPress={(e) => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault()
-                                handleTagSubmit()
-                            }
-                        }}
-                    />
+                            <Fab color="primary" size="small" aria-label="add" onClick={addStep}>
+                                <AddIcon />
+                            </Fab>
+                        </div>
+                        </ThemeProvider>
+                    </div>
 
-                    {this.state.tags.map((tag, index) => {
-                        return (
-                            <div>
-                                <Chip
-                                    key={tag}
-                                    //icon={icon}
-                                    label={tag}
-                                    onDelete={handleTagDelete(index)}
-                                />
-                            </div>
-                        )
-                    })}
-
-                    <Button variant="contained" color="primary" onClick={handleSubmit}>
-                        Update Recipe
-                    </Button>
-                    <Button variant="outlined" color="primary" onClick={handleCancel}>
-                        Cancel
-                    </Button>
-                </div>
+                    <div className="recipe-buttons">
+                        <button className="submit-btn" onClick={handleSubmit}>
+                            Update
+                        </button>
+                        <button className="cancel-btn" onClick={handleCancel}>
+                            Cancel
+                        </button>
+                    </div>
+                    </div>
+                </Container>
             </div>
         )
     }

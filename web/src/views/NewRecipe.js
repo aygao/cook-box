@@ -325,7 +325,7 @@ class NewRecipe extends React.Component {
                             <button className="submit-btn" onClick={handleSubmit}>
                                 Create
                             </button>
-                            <button className="delete-recipe" onClick={handleCancel}>
+                            <button className="delete-btn" onClick={handleCancel}>
                                 Cancel
                             </button>
                         </div>
