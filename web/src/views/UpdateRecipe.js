@@ -8,7 +8,7 @@ import Paper from '@material-ui/core/Paper'
 import history from '../utils/History'
 import { withRouter } from "react-router-dom"
 import NavBar from '../components/NavBar'
-import '../NewUpdatePage.scss'
+import '../assets/styles/NewUpdatePage.scss'
 import Container from '@material-ui/core/Container'
 import ImageUploader from 'react-images-upload'
 import Fab from '@material-ui/core/Fab';

@@ -9,7 +9,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import NavBar from '../components/NavBar'
-import '../RecipePage.scss';
+import '../assets/styles/RecipePage.scss';
 import theme from '../utils/muiTheme'
 import { ThemeProvider } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography';
@@ -69,7 +69,7 @@ class Recipe extends React.Component {
                 <div>
                     <NavBar hasSearch={false} />
                 </div>
-                <Container maxWidth="lg">
+                <Container maxWidth="xl">
                     <div className="recipe-page">
                         
 

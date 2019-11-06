@@ -36,9 +36,14 @@
 
 }
 
-.recipe-intro, .recipe-ingr {
-    width:25%;
+.recipe-intro {
+    width:30%;
     padding:20px;
+}
+
+.recipe-ingr {
+    width:20%;
+    padding: 20px 0;
 }
 
 .recipe-steps {

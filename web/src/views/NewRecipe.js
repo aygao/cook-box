@@ -6,7 +6,7 @@ import update from 'react-addons-update'
 import Chip from '@material-ui/core/Chip';
 import { withRouter } from "react-router-dom"
 import NavBar from '../components/NavBar'
-import '../NewUpdatePage.scss';
+import '../assets/styles/NewUpdatePage.scss';
 import Container from '@material-ui/core/Container'
 import ImageUploader from 'react-images-upload'
 import Fab from '@material-ui/core/Fab';

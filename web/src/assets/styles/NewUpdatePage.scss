@@ -46,6 +46,7 @@
 
 .recipe-ingr {
     width:40%;
+    padding:20px 0;
 }
 
 .recipe-steps {
@@ -77,9 +78,21 @@ ul li {
 .delete-btn {
     background-color:rgba(255, 255, 255, 0);
     border:none;
+    outline:0;
     cursor:pointer;
     vertical-align: bottom;
-    color: #8BA93E;
+    color: #3e8ba9;
+    &:hover {
+        color: #204150;
+        outline:0;
+    }
+    &:active {
+        outline:0;
+        color: #658794;
+    }
+    &:visited {
+        outline:0;
+    }
 }
 
 .add-row {
