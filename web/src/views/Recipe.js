@@ -9,7 +9,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import NavBar from '../components/NavBar'
-import '../assets/styles/RecipePage.scss';
+import styles from '../assets/styles/recipe-page.module.scss';
 import theme from '../utils/muiTheme'
 import { ThemeProvider } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography';
@@ -70,19 +70,19 @@ class Recipe extends React.Component {
                     <NavBar hasSearch={false} />
                 </div>
                 <Container maxWidth="xl">
-                    <div className="recipe-page">
+                    <div className={styles.recipePage}>
                         
 
-                        <div className="recipe-content">
-                            <div className="recipe-intro">
+                        <div className={styles.recipeContent}>
+                            <div className={styles.recipeIntro}>
                                 <ThemeProvider theme={theme}>
                                     <Typography variant="h6">
                                         {this.state.recipeData.name}
                                     </Typography>
-                                    <div className="recipe-photo">
+                                    <div className={styles.recipePhoto}>
                                         <img src={require("../test.jpeg")} width="100%" alt="cookiesss"/>
                                     </div>
-                                    <div className="recipe-desc">
+                                    <div className={styles.recipeDesc}>
                                         <Typography variant="body1">
                                             {this.state.recipeData.description}
                                         </Typography>
@@ -106,7 +106,7 @@ class Recipe extends React.Component {
                                     </Typography>
                                 </ThemeProvider>
                             </div>
-                            <div className="recipe-ingr">
+                            <div className={styles.recipeIngr}>
                                 <Typography variant="subtitle2">
                                     Ingredients
                                 </Typography>
@@ -119,7 +119,7 @@ class Recipe extends React.Component {
                                             </ul>
                                     )} 
                             </div>
-                            <div className="recipe-steps">
+                            <div className={styles.recipeSteps}>
                                 <Typography variant="subtitle2">
                                     Instructions
                                 </Typography>
@@ -134,11 +134,11 @@ class Recipe extends React.Component {
                                     </ol>
                             </div>
                         </div>
-                        <div className="recipe-buttons">
-                            <button className="edit-recipe" onClick={handleEditOnClick}>
+                        <div className={styles.recipeButtons}>
+                            <button className={styles.editRecipe} onClick={handleEditOnClick}>
                                 Edit Recipe
                             </button>
-                            <button className="delete-recipe" onClick={handleDeleteOnClick}>
+                            <button className={styles.deleteRecipe} onClick={handleDeleteOnClick}>
                                 Delete Recipe
                             </button>
                         </div>
