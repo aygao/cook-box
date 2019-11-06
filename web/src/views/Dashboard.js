@@ -45,8 +45,8 @@ class Dashboard extends React.Component {
                     <NavBar hasSearch={true} onChange={this.handleSearchChange} />
                 </div>
                 {/* {console.log(this.state)} */}
-                <Container maxWidth="lg">
-                <Grid container spacing={5} className="recipe-grid">
+                <Container maxWidth="lg" className="recipe-grid">
+                <Grid container spacing={5}>
                     {this.state.searchedRecipes.map(
                         (row) => 
                             <Grid key={row.recipe_id} item xs={6} md={3} lg={3}>
