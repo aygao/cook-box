@@ -69,7 +69,7 @@ class Recipe extends React.Component {
                 <div>
                     <NavBar hasSearch={false} />
                 </div>
-                <Container maxWidth="xl">
+                <Container maxWidth="lg">
                     <div className={styles.recipePage}>
                         
 

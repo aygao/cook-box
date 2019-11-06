@@ -6,7 +6,7 @@ import update from 'react-addons-update'
 import Chip from '@material-ui/core/Chip';
 import { withRouter } from "react-router-dom"
 import NavBar from '../components/NavBar'
-import '../assets/styles/NewUpdatePage.scss';
+import styles from '../assets/styles/create-edit-page.module.scss'
 import Container from '@material-ui/core/Container'
 import ImageUploader from 'react-images-upload'
 import Fab from '@material-ui/core/Fab';
@@ -158,7 +158,7 @@ class NewRecipe extends React.Component {
                     <NavBar hasSearch={false} />
                 </div>
                 <Container maxWidth="xl">
-                    <div className="new-update-page">
+                    <div className={styles.createEditPage}>
                         <ImageUploader
                             withIcon={true}
                             buttonText="Choose image"
@@ -166,9 +166,9 @@ class NewRecipe extends React.Component {
                             maxFileSize={5242880}
                             style={{width:"80%"}}
                         />
-                        <div className="recipe-content">
+                        <div className={styles.recipeContent}>
                             <ThemeProvider theme={theme}>
-                            <div className="recipe-intro">
+                            <div className={styles.recipeIntro}>
                             
                                 <TextField
                                     required
@@ -222,7 +222,7 @@ class NewRecipe extends React.Component {
 
                                 {this.state.tags.map((tag, index) => {
                                     return (
-                                        <div className="tag-chips">
+                                        <div className={styles.tagChips}>
                                             <Typography variant="overline">
                                             <Chip
                                                 key={tag}
@@ -240,13 +240,13 @@ class NewRecipe extends React.Component {
                                 })}
                             </div>
                             
-                            <div className="recipe-ingr">
+                            <div className={styles.recipeIngr}>
                                 <Typography variant="subtitle2">
                                     Ingredients
                                 </Typography>
                                 {this.state.ingredients.map((ingredients, index) => {
                                     return (
-                                        <div className="add-row">
+                                        <div className={styles.addRow}>
                                             <TextField
                                                 // id={index}
                                                 value = {this.state.ingredients[index].quantity}
@@ -274,7 +274,7 @@ class NewRecipe extends React.Component {
                                             {/* <button id={index} onClick={() => deleteIngredient(index)}>
                                                 Delete Ingredient
                                             </button> */}
-                                            <button className="delete-btn" id={index} onClick={() => deleteIngredient(index)}>
+                                            <button className={styles.deleteBtn} id={index} onClick={() => deleteIngredient(index)}>
                                                 <HighlightOffIcon />
                                             </button>
                                         </div>
@@ -286,13 +286,13 @@ class NewRecipe extends React.Component {
                                 </Fab>
                             </div>
 
-                            <div className="recipe-steps">
+                            <div className={styles.recipeSteps}>
                                 <Typography variant="subtitle2">
                                     Instructions
                                 </Typography>
                                 {this.state.steps.map((step, index) => {
                                     return (
-                                        <div className="add-row">
+                                        <div className={styles.addRow}>
                                             <TextField
                                                 // id={index}
                                                 multiline
@@ -307,7 +307,7 @@ class NewRecipe extends React.Component {
                                             {/* <button id={index} onClick={() => deleteStep(index)}>
                                                 Delete Step
                                             </button> */}
-                                            <button className="delete-btn" id={index} onClick={() => deleteStep(index)}>
+                                            <button className={styles.deleteBtn} id={index} onClick={() => deleteStep(index)}>
                                                 <HighlightOffIcon />
                                             </button>
                                         </div>
@@ -321,11 +321,11 @@ class NewRecipe extends React.Component {
                             </div>
                             </ThemeProvider>
                         </div>
-                        <div className="recipe-buttons">
-                            <button className="submit-btn" onClick={handleSubmit}>
+                        <div className={styles.recipeButtons}>
+                            <button className={styles.submitBtn} onClick={handleSubmit}>
                                 Create
                             </button>
-                            <button className="cancel-btn" onClick={handleCancel}>
+                            <button className={styles.cancelBtn} onClick={handleCancel}>
                                 Cancel
                             </button>
                         </div>
