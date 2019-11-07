@@ -4,15 +4,17 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 from datetime import datetime
 from flask_cors import CORS
+from flask_bcrypt import Bcrypt
 
 
 app = Flask(__name__)
 CORS(app)
+bcrypt = Bcrypt(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URI']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-from models import Recipes, Steps, Ingredients
+from models import Recipes, Steps, Ingredients, Users
 
 
 @app.route('/')
@@ -206,6 +208,58 @@ def updateSteps(recipe_id):
         except Exception as e:
             return str(e)
     return "steps added"
+
+
+@app.route("/createuser", methods=['POST'])
+def createUser():
+    content = request.get_json()
+    username = content.get('username')
+    password = content.get('password')
+    exists = Users.query.filter_by(username=username).scalar() is not None
+    if exists:
+        return "User already exists"
+
+    else:
+        try:
+            user = Users(
+                username=username,
+                password=bcrypt.generate_password_hash(password).decode('utf8')
+            )
+            db.session.add(user)
+            db.session.commit()
+        except Exception as e:
+            return str(e)
+    return "User created successfully"
+
+
+@app.route("/login", methods=['POST'])
+def Login():
+    content = request.get_json()
+    username = content.get('username')
+    password = content.get('password')
+    user_exists = Users.query.filter_by(username=username).scalar() is not None
+    if not user_exists:
+        return "Login Failed"
+
+    pass_hash = Users.query.filter_by(username=username).with_entities(Users.password).scalar()
+    if bcrypt.check_password_hash(pass_hash, password):  # returns True
+        return "Login Success"
+    else:
+        return "Login Failed"
+
+
+@app.route("/deleteuser/<id>", methods=['DELETE'])
+def deleteUser(id):
+    try:
+        exists = Users.query.filter_by(user_id=id).scalar() is not None
+        if exists:
+            Users.query.filter_by(user_id=id).delete()
+            db.session.commit()
+            return f"User {id} was deleted"
+        else:
+            return f"User {id} does not exist"
+    except Exception as e:
+        return str(e)
 
 
 if __name__ == '__main__':

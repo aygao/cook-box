@@ -112,3 +112,31 @@ class Ingredients(db.Model):
             'create_dttm': self.create_dttm,
             'update_dttm': self.update_dttm
         }
+
+
+class Users(db.Model):
+    __tablename__ = 'users'
+    __table_args__ = ({"schema": "cbschema"})
+
+    user_id = db.Column(
+        db.BigInteger,
+        primary_key=True)
+    username = db.Column(db.String(75), nullable=False, unique=True)
+    password = db.Column(db.String(255), nullable=False)
+    create_dttm = db.Column(db.DateTime, nullable=False)
+
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+        self.create_dttm = datetime.now()
+
+    def __repr__(self):
+        return '<id {}>'.format(self.user_id)
+
+    def serialize(self):
+        return {
+            'user_id': self.user_id,
+            'username': self.username,
+            'password': self.password,
+            'create_dttm': self.create_dttm,
+        }
