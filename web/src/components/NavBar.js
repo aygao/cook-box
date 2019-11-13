@@ -12,7 +12,9 @@ import { withRouter } from 'react-router-dom'
 import theme from '../utils/muiTheme'
 import { ThemeProvider } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid';
-
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 
 
 class NavBar extends React.Component {
@@ -29,11 +31,12 @@ class NavBar extends React.Component {
             <div>
                 <div className="nav-bar">
                     <Grid className="nav-grid" container spacing={3}>
-                        <Grid className="nav-grid-elem" item xs={4} md={2} lg={2}>
+                        <Grid className="nav-grid-elem" item xs={3} md={2} lg={2}>
                             <NavLink className="cook-box" to="/dashboard" >Cook Box</NavLink>
                         </Grid>
-                        <Grid className="nav-grid-elem" item xs={4} md={8} lg={8}>
-                    
+                        <ThemeProvider theme={theme}>
+                        <Grid className="nav-grid-elem" item xs={4} md={7} lg={7}>
+                        
                             {this.props.hasSearch ?
                                 <Input
                                     className="search-bar"
@@ -50,11 +53,41 @@ class NavBar extends React.Component {
                             />
                                 : <div className="search-bar"></div>}
                         </Grid>
-                        <Grid className="nav-grid-elem" item xs={4} md={2} lg={2}>
+                        <Grid className="nav-grid-elem" item xs={3} md={2} lg={2}>
                             {this.props.hasBtn ?
                                 <button className="new-recipe" onClick={handleNewRecipeClick}>New Recipe</button>
                             : <div></div>}
                         </Grid>
+                        <Grid className="nav-grid-elem" item xs={2} md={1} lg={1}>
+                        <IconButton
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            // onClick={handleMenu}
+                            color="primary"
+                        >
+                            <AccountCircleIcon />
+                        </IconButton>
+                        <Menu
+                            id="menu-appbar"
+                            // anchorEl={anchorEl}
+                            anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                            }}
+                            // open={open}
+                            // onClose={handleClose}
+                        >
+                            {/* <MenuItem onClick={handleClose}>Profile</MenuItem> */}
+                            {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
+                            </Menu>
+                        </Grid>
+                    </ThemeProvider>
                     </Grid>
                     
                     {/* <Button color="inherit">Login</Button> */}

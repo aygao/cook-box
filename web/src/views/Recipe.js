@@ -115,7 +115,7 @@ class Recipe extends React.Component {
                                             <ul>
                                                 <Typography variant="body1">
                                                 <li key={row.ingredient_id}>{row.quantity} {row.name}
-                                                    {row.notes == null || row.notes == '' ? '' : ' (' }{row.notes}{row.notes == null || row.notes == '' ? '' : ')' }</li>
+                                                    {row.notes == null || row.notes === '' ? '' : ' (' }{row.notes}{row.notes == null || row.notes === '' ? '' : ')' }</li>
                                                 </Typography>
                                             </ul>
                                     )} 
