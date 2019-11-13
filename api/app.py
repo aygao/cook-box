@@ -5,6 +5,10 @@ import os
 from datetime import datetime
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
+from flask_jwt_extended import (
+    JWTManager, jwt_required, create_access_token,
+    get_jwt_identity
+)
 
 
 app = Flask(__name__)
@@ -12,6 +16,8 @@ CORS(app)
 bcrypt = Bcrypt(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URI']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
+jwt = JWTManager(app)
 db = SQLAlchemy(app)
 
 from models import Recipes, Steps, Ingredients, Users
@@ -233,7 +239,7 @@ def createUser():
 
 
 @app.route("/login", methods=['POST'])
-def Login():
+def login():
     content = request.get_json()
     username = content.get('username')
     password = content.get('password')
@@ -242,10 +248,19 @@ def Login():
         return "Login Failed"
 
     pass_hash = Users.query.filter_by(username=username).with_entities(Users.password).scalar()
-    if bcrypt.check_password_hash(pass_hash, password):  # returns True
-        return "Login Success"
-    else:
+    if bcrypt.check_password_hash(pass_hash, password) is False:
         return "Login Failed"
+
+    access_token = create_access_token(identity=username)
+    return jsonify(access_token=access_token), 200
+
+
+@app.route('/protected', methods=['GET'])
+@jwt_required
+def protected():
+    # Access the identity of the current user with get_jwt_identity
+    current_user = get_jwt_identity()
+    return jsonify(logged_in_as=current_user), 200
 
 
 @app.route("/deleteuser/<id>", methods=['DELETE'])
