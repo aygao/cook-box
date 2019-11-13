@@ -67,7 +67,7 @@ class Recipe extends React.Component {
                 {/* {console.log(this.state)} */}
     
                 <div>
-                    <NavBar hasSearch={false} />
+                    <NavBar hasSearch={false} hasBtn={true} />
                 </div>
                 <Container maxWidth="lg">
                     <div className={styles.recipePage}>

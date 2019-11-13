@@ -42,7 +42,7 @@ class Dashboard extends React.Component {
         return (
             <div>
                 <div>
-                    <NavBar hasSearch={true} onChange={this.handleSearchChange} />
+                    <NavBar hasSearch={true} hasBtn={true} onChange={this.handleSearchChange} />
                 </div>
                 {/* {console.log(this.state)} */}
                 <Container maxWidth="lg" className="recipe-grid">

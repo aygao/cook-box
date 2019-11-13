@@ -11,6 +11,7 @@ import {
 import RenderRecipePage from './views/RenderRecipePage'
 import NewRecipe from './views/NewRecipe'
 import RenderUpdatePage from './views/RenderUpdatePage'
+import Login from './views/Login'
 import history from './utils/History'
 import 'typeface-roboto';
 
@@ -22,6 +23,9 @@ const App = () => {
             {/* <Link to="/dashboard">Dashboard</Link>
             <Link to="/newrecipe">New Recipe</Link> */}
             <Switch>
+                <Route path="/" exact>
+                    <Login />
+                </Route>
                 <Route path="/dashboard" exact>
                     <Dashboard />
                 </Route>

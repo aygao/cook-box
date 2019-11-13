@@ -176,7 +176,7 @@ class UpdateRecipe extends React.Component {
             <div>
                 {/* {console.log(this.state)} */}
                 <div>
-                    <NavBar hasSearch={false} />
+                    <NavBar hasSearch={false} hasBtn={true} />
                 </div>
                 <Container maxWidth="xl">
                     <div className={styles.createEditPage}>

@@ -51,9 +51,9 @@ class NavBar extends React.Component {
                                 : <div className="search-bar"></div>}
                         </Grid>
                         <Grid className="nav-grid-elem" item xs={4} md={2} lg={2}>
-                            {/* <ThemeProvider theme={theme}> */}
+                            {this.props.hasBtn ?
                                 <button className="new-recipe" onClick={handleNewRecipeClick}>New Recipe</button>
-                            {/* </ThemeProvider> */}
+                            : <div></div>}
                         </Grid>
                     </Grid>
                     
