@@ -49,6 +49,7 @@ html, body {
 
 .nav-grid {
     height:100%;
+    // width:90%;
 }
 
 .nav-grid-elem {
@@ -119,13 +120,17 @@ html, body {
     transition: all .1s ease-out;
 }
 
+.profileBtn {
+    margin: 0 30px;
+}
+
 .recipe-grid {
-    margin: 100px 0 50px 0;
+    margin: 100px 0 25px 0;
 }
 
 .recipe-card {
     position:relative;
-    height: 400px;
+    height: 380px;
     min-width: 200px;
     max-width: 400px;
 }
@@ -177,7 +182,7 @@ html, body {
 
 
 $font-size: 1.25rem;
-$line-height: 1;
+$line-height: 1.2;
 $lines-to-show: 2;
 .MuiCardHeader-content {
     display: block !important; /* Fallback for non-webkit */
@@ -213,7 +218,7 @@ $lines-to-show: 2;
 
 $card-desc-font-size: 0.875rem;
 $card-desc-line-height: 1.5;
-$card-desc-lines-to-show: 4;
+$card-desc-lines-to-show: 3;
 .card-desc {
     display: block !important; /* Fallback for non-webkit */
     display: -webkit-box !important;

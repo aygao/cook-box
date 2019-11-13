@@ -44,7 +44,7 @@ const theme = createMuiTheme({
       lineHeight: 1.5,
     },
     h6: {
-      lineHeight: 1,
+      lineHeight: 1.2,
       textAlign:'left'
     }
   },
