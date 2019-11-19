@@ -115,7 +115,9 @@ html, body {
 
 .search-bar.Mui-focused {
     border-radius: 25px;
-    border: 1.5px solid #8BA93E;
+    // border: 1.5px solid #8BA93E;
+    // outline:2px solid #8BA93E;
+    box-shadow: 0 0 0 2px #8BA93E;
     padding: 20px;
     transition: all .1s ease-out;
 }
